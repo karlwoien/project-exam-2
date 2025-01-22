@@ -19,11 +19,11 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  @apply font-heading;
+  @apply font-heading font-semibold;
 }
 
 p {
-  @apply text-base font-body;
+  @apply text-lg font-body;
 }
 
 .logo {
