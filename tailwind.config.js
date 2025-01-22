@@ -16,6 +16,7 @@ export default {
         logo: ["Italiana", "serif"],
         body: ["Inter", "sans-serif"],
         heading: ["Lato", "sans-serif"],
+        hero: ["Raleway", "san-serif"],
       },
     },
   },
