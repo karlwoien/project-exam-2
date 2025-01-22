@@ -4,23 +4,23 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
-        <header className="flex items-center justify-between bg-bg-primary text-bg-muted px-6 py-4">
+        <header className="flex items-center justify-between bg-bg-primary text-bg-muted px-5 py-4">
             {/* Logo */}
-            <div className="logo text-5xl font-logo">
+            <div className="logo text-4xl font-logo">
                 <Link to="/">Holidaze</Link>
             </div>
-
             {/* Navigation */}
-            <nav className="flex space-x-6 text-lg">
-                <Link to="/" className="hover:text-bg-highlight">Home</Link>
-                <Link to="/venues" className="hover:text-bg-accent">Venues</Link>
-            </nav>
-
-            {/* Buttons */}
-            <div className="flex space-x-4">
-                <LinkButton to="/login" label="Login" />
-                <LinkButton to="/register" label="Register" />
+            <div className="flex items-center space-x-5">
+                <nav className="space-x-5 text-lg">
+                    <Link to="/" className="hover:text-bg-highlight">Home</Link>
+                    <Link to="/venues" className="hover:text-bg-highlight">Venues</Link>
+                </nav>
+                {/* Buttons */}
+                <div className="space-x-5">
+                    <LinkButton to="/login" label="Login" variant="muted"/>
+                    <LinkButton to="/register" label="Register" variant="highlight" />
+                </div>
             </div>
         </header>
     );
-}
+};
