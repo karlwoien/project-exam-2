@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import VenueCard from "../components/VenueCard";
-import { getAllVenues } from "../api/apiClient";
+import Search from "../components/SearchVenues";
+import useVenues from "../hooks/useVenues";
 
 export default function Venues() {
-    const [venues, setVenues] = useState([]); // Holder alle venues
-    const [error, setError] = useState(null); // Håndterer feil
+    const { venues, isLoading, error, fetchVenues } = useVenues(); // Bruk hooken
 
-    useEffect(() => {
-        async function fetchVenues() {
-            try {
-                const data = await getAllVenues(); // Hent data fra API
-                setVenues(data.data); // Sett venue-data i state
-            } catch (err) {
-                setError(err.message); // Sett feil i state hvis noe går galt
-            }
-        }
+    const handleSearch = (query) => {
+      fetchVenues(query.trim() || ""); // Bruk query eller hent alle venues
+    };
 
-        fetchVenues(); // Kjør funksjonen når komponenten rendres
-    }, []);
-
-    if (error) {
-        return <p className="text-red-500">Error: {error}</p>;
+    if (isLoading) {
+        return <p className="pt-20">Loading venues...</p>;
     }
 
-    if (venues.length === 0) {
-        return <p>Loading venues...</p>;
+    if (error) {
+      return <p className="text-red-500">Error: {error}</p>;
     }
 
     return (
@@ -32,7 +23,8 @@ export default function Venues() {
             <h1 className="text-bg-highlight text-4xl mb-5">EXPLORE VENUES</h1>
             {/* Search input and filter option */}
             <div className="flex space-x-4">
-                <p>Placeholder search input</p>
+                {/* Search input */}
+                <Search onSearch={handleSearch} />
                 <p>Placeholder filter option</p>
             </div>
             {/* Venues grid */}
@@ -45,4 +37,4 @@ export default function Venues() {
             </div>
         </div>
     );
-}
+};
