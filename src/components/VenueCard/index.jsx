@@ -1,22 +1,38 @@
-
 import { CiLocationOn } from "react-icons/ci";
 
-export default function VenueCard () {
+export default function VenueCard ({venue}) {
+     // Generer lokasjonstekst
+     const location = venue.location?.city || venue.location?.country
+     ? `${venue.location.city || ""}${venue.location.city && venue.location.country ? ", " : ""}${venue.location.country || ""}`
+     : "Unknown location";
+
+     // Generer amenities tekst
+    const amenities = [];
+    if (venue.meta.wifi) amenities.push("WiFi");
+    if (venue.meta.parking) amenities.push("Parking");
+    if (venue.meta.breakfast) amenities.push("Breakfast");
+    if (venue.meta.pets) amenities.push("Pets");
+    const amenitiesText = amenities.length > 0 ? amenities.join(", ") : "Amenities unknown";
+
     return (
-        <div className="card flex flex-col rounded-lg h-full">
+        <div className="card flex flex-col">
             {/*Image */}
-            <div className="h-[164px] w-full overflow-hidden">
-                
+            <div className="h-[200px] w-full overflow-hidden pb-2.5">
+                <img 
+                    src={venue.media[0]?.url} 
+                    alt={venue.name}
+                    className="w-full h-full object-fill rounded-t-md"
+                />
             </div>
             {/*Content */}
             <div>
-                <h3 className="text-xl">Title</h3>
+                <h3 className="text-xl">{venue.name}</h3>
                 <div className="flex items-center space-x-2.5">
-                    <CiLocationOn></CiLocationOn>
-                    <p>Location</p>
+                    <CiLocationOn/>
+                    <p>{location}</p>
                 </div>
-                <p className="font-thin">Amenities</p>
-                <p>1000 NOK/Night</p>
+                <p className="font-thin">{amenitiesText}</p>
+                <p> {venue.price} NOK/Night</p>
             </div>
         </div>
     );
