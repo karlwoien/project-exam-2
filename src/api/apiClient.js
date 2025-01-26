@@ -1,25 +1,29 @@
 import { API_HOLIDAZE_URL, API_KEY } from "./constants";
 
 
-// Hent alle venues med API-nøkkel
-export async function getAllVenues() {
+// Generisk GET-funksjon for å hente data fra API-et
+export async function fetchData(endpoint, params = {}) {
     try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/venues`, {
+        // Bygg URL med query-parametere hvis de finnes
+        const url = new URL(`${API_HOLIDAZE_URL}${endpoint}`);
+        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+
+        const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "X-Noroff-API-Key": API_KEY, // Legger til API-nøkkelen i headeren
+                "X-Noroff-API-Key": API_KEY,
             },
         });
 
         if (!response.ok) {
-            throw new Error(`Failed to fetch venues: ${response.status} ${response.statusText}`);
+            throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
         }
 
         const data = await response.json();
-        return data; // Returnerer venues fra API-et
+        return data;
     } catch (error) {
-        console.error('Error fetching venues:', error.message);
-        throw error; // Kaster feilen videre
+        console.error("Error fetching data:", error.message);
+        throw error;
     }
 }
