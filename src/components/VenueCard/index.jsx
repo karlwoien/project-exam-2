@@ -5,7 +5,7 @@ export default function VenueCard ({venue}) {
      // Generer lokasjonstekst
      const location = venue.location?.city || venue.location?.country
      ? `${venue.location.city || ""}${venue.location.city && venue.location.country ? ", " : ""}${venue.location.country || ""}`
-     : "Unknown location";
+     : "No location specified";
 
      // Generer amenities tekst
     const amenities = [];
@@ -13,7 +13,7 @@ export default function VenueCard ({venue}) {
     if (venue.meta.parking) amenities.push("Parking");
     if (venue.meta.breakfast) amenities.push("Breakfast");
     if (venue.meta.pets) amenities.push("Pets");
-    const amenitiesText = amenities.length > 0 ? amenities.join(", ") : "Amenities unknown";
+    const amenitiesText = amenities.length > 0 ? amenities.join(", ") : "No amenities listed";
 
     return (
         <Link to={`venue/${venue.id}`}>
