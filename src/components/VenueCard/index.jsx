@@ -1,4 +1,5 @@
 import { CiLocationOn } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 export default function VenueCard ({venue}) {
      // Generer lokasjonstekst
@@ -15,6 +16,7 @@ export default function VenueCard ({venue}) {
     const amenitiesText = amenities.length > 0 ? amenities.join(", ") : "Amenities unknown";
 
     return (
+        <Link to={`venue/${venue.id}`}>
         <div className="card flex flex-col">
             {/*Image */}
             <div className="h-[200px] w-full overflow-hidden pb-2.5">
@@ -35,5 +37,6 @@ export default function VenueCard ({venue}) {
                 <p> {venue.price} NOK/Night</p>
             </div>
         </div>
+        </Link>
     );
 };
