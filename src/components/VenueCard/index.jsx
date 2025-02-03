@@ -20,7 +20,7 @@ export default function VenueCard ({venue}) {
     const hasImage = venue.media?.length > 0 && venue.media[0]?.url;
  
     return (
-        <Link to={`venue/${venue.id}`}>
+        <Link to={`/venue/${venue.id}`}>
         <div className="card flex flex-col">
             {/*Image */}
             <div className="h-[200px] w-full overflow-hidden pb-2.5 flex justify-center items-center">
