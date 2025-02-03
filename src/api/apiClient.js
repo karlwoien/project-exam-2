@@ -1,5 +1,4 @@
-import { API_HOLIDAZE_URL, API_KEY } from "./constants";
-
+import { API_HOLIDAZE_URL, API_BASE_URL, API_KEY } from "./constants";
 
 // Generisk GET-funksjon for å hente data fra API-et
 export async function fetchData(endpoint, params = {}) {
@@ -26,4 +25,43 @@ export async function fetchData(endpoint, params = {}) {
         console.error("Error fetching data:", error.message);
         throw error;
     }
+}
+
+export async function registerUser(userData) {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Noroff-API-Key": API_KEY,
+        },
+        body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
+}
+
+export async function loginUser(userData) {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Noroff-API-Key": API_KEY,
+        },
+        body: JSON.stringify({
+            ...userData,
+            _holidaze: true,
+        }),
+    });
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
 }
