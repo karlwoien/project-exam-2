@@ -22,10 +22,9 @@ export default function Venues() {
         <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
             <h1 className="text-bg-highlight text-4xl mb-5">EXPLORE VENUES</h1>
             {/* Search input and filter option */}
-            <div className="flex space-x-4">
+            <div className="w-full">
                 {/* Search input */}
                 <Search onSearch={handleSearch} />
-                <p>Placeholder filter option</p>
             </div>
             {/* Venues grid */}
             <div className=" max-w-6xl mx-auto">
@@ -37,4 +36,4 @@ export default function Venues() {
             </div>
         </div>
     );
-};
+}
