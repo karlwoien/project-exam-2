@@ -11,7 +11,7 @@ export default function useVenue(id) {
 
         async function fetchVenue() {
             try {
-                const data = await fetchData(`/venues/${id}`);
+                const data = await fetchData(`/venues/${id}` , { _owner: true });
                 setVenue(data.data);
             } catch (err) {
                 setError(err.message);
