@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../../forms/validation/userSchema";
-import { updateUserProfile } from "../../api/apiClient";
+import { updateUserProfile } from "../../api"; 
 import useAuthStore from "../../store/authStore";
 
 export default function ProfileEditForm({ profile, onClose }) {

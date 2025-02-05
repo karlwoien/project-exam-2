@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../store/authStore";
-import { fetchUserProfile, fetchUserVenues, fetchUserBookings } from "../api/apiClient";
+import { fetchUserProfile, fetchUserVenues, fetchUserBookings } from "../api";
 
 export default function useProfile() {
     const { user, token } = useAuthStore();

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../forms/validation/userSchema";
-import { loginUser } from "../api/apiClient";
+import { loginUser } from "../api";
 import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
