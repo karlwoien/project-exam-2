@@ -3,13 +3,16 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../forms/validation/userSchema";
 import { registerUser } from "../api/apiClient";
-import { saveUserToLocalStorage } from "../utils/authUtils";
+import useAuthStore from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 import AccountTypeSelector from "../forms/AccountTypeSelector";
 
 export default function Register() {
     const [error, setError] = useState(null);
     const [venueManager, setVenueManager] = useState(false);
+    const navigate = useNavigate(); // Bruker React Router for navigasjon
+    const setUser = useAuthStore((state) => state.login); // Henter Zustand login-funksjon
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(registerSchema),
@@ -17,9 +20,7 @@ export default function Register() {
 
     const onSubmit = async (data) => {
         setError(null);
-
         try {
-            // Formater data før API-kall
             const userPayload = {
                 name: data.name,
                 email: data.email,
@@ -28,11 +29,10 @@ export default function Register() {
             };
 
             const response = await registerUser(userPayload);
-            // Lagre bruker i Local Storage
-            saveUserToLocalStorage(response.data);
+            setUser(response.data, response.data.accessToken); // Oppdater Zustand state
 
-            alert("Registration successful! Redirecting...");
-            window.location.href = "/profile";
+            alert("Registration successful!");
+            navigate("/profile");
         } catch (err) {
             console.error("Error during registration:", err.message);
             setError(err.message);

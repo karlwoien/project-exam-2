@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../forms/validation/userSchema";
 import { loginUser } from "../api/apiClient";
-import { saveUserToLocalStorage } from "../utils/authUtils";
+import useAuthStore from "../store/authStore";
+import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 
 export default function Login() {
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Bruker React Router til navigasjon
+    const setUser = useAuthStore((state) => state.login); // Henter Zustand login-funksjon
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(loginSchema),
@@ -17,9 +20,9 @@ export default function Login() {
         setError(null);
         try {
             const response = await loginUser(data);
-            saveUserToLocalStorage(response.data);
-            alert("Login successful! Redirecting...");
-            window.location.href = "/profile";
+            setUser(response.data, response.data.accessToken); // Oppdater Zustand state
+            alert("Login successful!");
+            navigate("/profile");
         } catch (err) {
             setError(err.message);
         }
