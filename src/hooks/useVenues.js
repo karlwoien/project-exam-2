@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchData } from "../api/apiClient";
+import { fetchData } from "../api";
 
 export default function useVenues() {
     const [venues, setVenues] = useState([]); // Holder venues

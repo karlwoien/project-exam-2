@@ -43,7 +43,14 @@ export const userSchema = yup.object().shape({
     banner,
 });
 
-// Spesifikke schemaer
+// Register and login schemaer
 export const registerSchema = userSchema.pick(["name", "email", "password", "confirmPassword"]);
 export const loginSchema = userSchema.pick(["email", "password"]);
-export const updateProfileSchema = userSchema.shape({ name, bio, avatar, banner });
+
+// Profiloppdatering schema
+export const updateProfileSchema = yup.object().shape({
+    bio: yup.string().max(160, "Bio must be less than 160 characters").optional(),
+    avatarUrl: yup.string().url("Must be a valid URL").optional(),
+    bannerUrl: yup.string().url("Must be a valid URL").optional(),
+});
+
