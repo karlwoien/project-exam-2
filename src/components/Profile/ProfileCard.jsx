@@ -42,7 +42,7 @@ export default function ProfileCard() {
                     {/* Rediger Profil-knapp */}
                     <button
                         onClick={() => setIsEditing(true)}
-                        className="mt-4 px-4 py-2 bg-bg-primary text-white rounded-md hover:bg-bg-highlight transition"
+                        className="mt-4 px-4 py-2 bg-bg-primary text-white rounded-full hover:bg-bg-highlight transition"
                     >
                         Edit Profile
                     </button>
@@ -52,7 +52,7 @@ export default function ProfileCard() {
                 <div className="text-center md:text-left flex-col md:pt-12">
                     <h2 className="text-2xl font-bold">{user.name}</h2>
                     <p className="text-gray-500">{user.email}</p>
-                    <span className={`inline-block mt-2 px-3 py-1 text-sm rounded-md  ${user.venueManager ? "bg-bg-primary text-white" : "bg-gray-200 text-gray-800"}`}>
+                    <span className={`inline-block mt-2 px-2 py-1.5 text-sm rounded-md  ${user.venueManager ? "bg-gray-200 text-gray-800" : "bg-gray-200 text-gray-800"}`}>
                         {user.venueManager ? "Venue Manager" : "Traveler"}
                     </span>
 
