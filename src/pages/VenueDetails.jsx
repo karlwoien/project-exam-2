@@ -47,7 +47,7 @@ export default function VenueDetails() {
             {/* Content Grid */}
             <div className="flex flex-wrap justify-between">
                 {/* Venue Info (Venstre kolonne) */}
-                <div className="mb-5 max-w-[550px]">
+                <div className="mb-5 max-w-[600px]">
                     <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5" />
                     
                     {/* Rating */}
@@ -91,7 +91,7 @@ export default function VenueDetails() {
                 </div>
 
                 {/* Booking (Høyre kolonne) */}
-                <div className="bg-gray-100 p-6 rounded-lg ">
+                <div className="px-6 shadow-lg rounded-md h-[500px]">
                     <BookingCalendar
                         bookings={bookings}
                         maxGuests={venue.maxGuests}

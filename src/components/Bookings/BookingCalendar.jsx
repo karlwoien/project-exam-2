@@ -51,7 +51,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
     return (
         <div className="p-5 bg-white rounded-lg ">
-            <h3 className="text-lg font-semibold mb-2">Select your dates</h3>
+            <h3 className="text-2xl mb-2">Select dates</h3>
 
             {/* 📅 Inline DatePicker */}
             <DatePicker
@@ -68,7 +68,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
             {/* Guest Selection */}
             <div className="mt-3">
-                <label className="block font-medium">Guests</label>
+                <label className="block mb-2">Number of guests</label>
                 <input
                     type="number"
                     value={guests}
