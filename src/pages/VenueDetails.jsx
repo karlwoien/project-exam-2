@@ -1,14 +1,38 @@
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import useVenue from "../hooks/useVenue";
+import { fetchVenueBookings } from "../api";
+import useAuthStore from "../store/authStore";
 import { MdStar } from "react-icons/md";
 import LocationText from "../components/VenueInfo/LocationText";
 import AmenitiesText from "../components/VenueInfo/AmenitiesText";
 import VenueImage from "../components/VenueInfo/VenueImage";
 import VenueTitle from "../components/VenueInfo/VenueTitle";
+import BookingCalendar from "../components/Bookings/BookingCalendar";
 
 export default function VenueDetails() {
     const { id } = useParams();
     const { venue, isLoading, error } = useVenue(id);
+    const { token } = useAuthStore();
+    const [bookings, setBookings] = useState([]);
+
+    // Fetch eksisterende bookinger for dette stedet
+    useEffect(() => {
+        async function loadBookings() {
+            try {
+                if (venue) {
+                    const data = await fetchVenueBookings(venue.id, token);
+                    setBookings(data.data); // Lagre bookinger i state
+                }
+            } catch (error) {
+                console.error("Error loading venue bookings:", error);
+            }
+        }
+
+        if (venue) {
+            loadBookings();
+        }
+    }, [venue, token]);
 
     if (isLoading) return <p>Loading venue details...</p>;
     if (error) return <p className="text-red-500">Error: {error}</p>;
@@ -19,11 +43,13 @@ export default function VenueDetails() {
             <div className="mb-7">
                 <VenueImage media={venue.media} size="h-[500px]" className="w-full h-[500px] object-cover rounded-t-md" />
             </div>
+
             {/* Content Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex flex-wrap justify-between">
                 {/* Venue Info (Venstre kolonne) */}
-                <div className="md:col-span-2">
-                    <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5"/>
+                <div className="mb-5 max-w-[600px]">
+                    <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5" />
+                    
                     {/* Rating */}
                     <div className="flex items-center space-x-1 mb-2.5">
                         {Array.from({ length: 5 }, (_, index) => (
@@ -40,7 +66,7 @@ export default function VenueDetails() {
                     <div className="mb-2.5">
                         <AmenitiesText meta={venue.meta} />
                     </div>
-                    
+
                     {/* Price */}
                     <p className="mb-5">{venue.price} NOK/Night</p>
 
@@ -49,6 +75,7 @@ export default function VenueDetails() {
                         <p className="font-semibold">Description</p>
                         <p>{venue.description}</p>
                     </div>
+
                     {/* Host Info */}
                     <div className="flex items-center mt-5">
                         <img
@@ -64,15 +91,12 @@ export default function VenueDetails() {
                 </div>
 
                 {/* Booking (Høyre kolonne) */}
-                <div className="md:col-span-1 bg-gray-100 p-6 rounded-lg">
-                    <h3 className="text-lg font-semibold mb-2">Temp header</h3>
-                    
-                    {/*HER MÅ KALENDER OSV INN - MÅ JOBBES MER MED */}
-
-                    <button className="w-full bg-bg-primary text-bg-muted py-2 rounded-md hover:bg-bg-highlight">
-                        Reserve
-                    </button>
-                    <p className="text-center text-gray-500 text-sm mt-2">Login to reserve venue</p>
+                <div className="px-6 shadow-lg rounded-md h-[500px]">
+                    <BookingCalendar
+                        bookings={bookings}
+                        maxGuests={venue.maxGuests}
+                        venueId={venue.id}
+                    />
                 </div>
             </div>
         </div>
