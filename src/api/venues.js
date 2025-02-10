@@ -22,3 +22,27 @@ export async function fetchUserVenues(username, token) {
         throw error;
     }
 }
+
+// Create venue - post method
+export async function createVenue(venueData, token) {
+    try {
+        const response = await fetch(`${API_HOLIDAZE_URL}/venues`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+                "X-Noroff-API-Key": API_KEY,
+            },
+            body: JSON.stringify(venueData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to create venue: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error creating venue:", error.message);
+        throw error;
+    }
+}
