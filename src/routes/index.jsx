@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import Venues from "../pages/Venues";
 import VenueDetails from "../pages/VenueDetails";
+import AddVenue from "../pages/AddVenue";
 import Error from "../pages/Error";
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
         {
             path: "/venue/:id",
             element: <VenueDetails />,
+        },
+        {
+            path: "/venues/new",
+            element: <AddVenue />,
         },
         {
             path: "*",
