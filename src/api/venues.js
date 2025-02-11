@@ -46,3 +46,25 @@ export async function createVenue(venueData, token) {
         throw error;
     }
 }
+
+// DELETE VENUE - delete method
+export async function deleteVenue(venueId, token) {
+    try {
+        const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "X-Noroff-API-Key": API_KEY,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to delete venue: ${response.status}`);
+        }
+
+        return true; // Returnerer suksess
+    } catch (error) {
+        console.error("Error deleting venue:", error.message);
+        throw error;
+    }
+}
