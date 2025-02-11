@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useVenue from "../hooks/useVenue";
-import { fetchVenueBookings } from "../api";
+import { fetchVenueBookings, deleteVenue } from "../api";
 import useAuthStore from "../store/authStore";
-import { MdStar } from "react-icons/md";
+import { MdStar, MdDelete } from "react-icons/md";
 import LocationText from "../components/VenueInfo/LocationText";
 import AmenitiesText from "../components/VenueInfo/AmenitiesText";
 import VenueImage from "../components/VenueInfo/VenueImage";
@@ -12,9 +12,11 @@ import BookingCalendar from "../components/Bookings/BookingCalendar";
 
 export default function VenueDetails() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { venue, isLoading, error } = useVenue(id);
-    const { token } = useAuthStore();
+    const { user, token } = useAuthStore();
     const [bookings, setBookings] = useState([]);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     // Fetch eksisterende bookinger for dette stedet
     useEffect(() => {
@@ -22,7 +24,7 @@ export default function VenueDetails() {
             try {
                 if (venue) {
                     const data = await fetchVenueBookings(venue.id, token);
-                    setBookings(data.data); // Lagre bookinger i state
+                    setBookings(data.data);
                 }
             } catch (error) {
                 console.error("Error loading venue bookings:", error);
@@ -37,6 +39,27 @@ export default function VenueDetails() {
     if (isLoading) return <p>Loading venue details...</p>;
     if (error) return <p className="text-red-500">Error: {error}</p>;
 
+    // Sjekk om innlogget bruker eier venue
+    const isOwner = user && venue.owner?.name === user.name;
+
+    // Håndter sletting av venue
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this venue?");
+        if (!confirmDelete) return;
+
+        setIsDeleting(true);
+        try {
+            await deleteVenue(id, token);
+            alert("Venue deleted successfully!");
+            navigate("/profile"); // Send brukeren tilbake til profilen
+        } catch (error) {
+            console.error("Error deleting venue:", error.message);
+            alert("Failed to delete venue.");
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
             {/* Image */}
@@ -48,8 +71,22 @@ export default function VenueDetails() {
             <div className="flex flex-wrap justify-between">
                 {/* Venue Info (Venstre kolonne) */}
                 <div className="mb-5 max-w-[600px]">
-                    <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5" />
-                    
+                    <div className="flex justify-between items-center">
+                        <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5" />
+                        
+                        {/* Slett-knapp (kun for eier) */}
+                        {isOwner && (
+                            <button
+                                onClick={handleDelete}
+                                className="flex items-center space-x-2 text-red-500 hover:text-red-700 transition"
+                                disabled={isDeleting}
+                            >
+                                <MdDelete className="w-6 h-6" />
+                                <span>{isDeleting ? "Deleting..." : "Delete Venue"}</span>
+                            </button>
+                        )}
+                    </div>
+
                     {/* Rating */}
                     <div className="flex items-center space-x-1 mb-2.5">
                         {Array.from({ length: 5 }, (_, index) => (
