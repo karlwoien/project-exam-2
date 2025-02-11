@@ -84,6 +84,17 @@ export default function VenueDetails() {
                                 <MdDelete className="w-6 h-6" />
                                 <span>{isDeleting ? "Deleting..." : "Delete Venue"}</span>
                             </button>
+                            
+                        )}
+
+                        {/*Edit knapp */}
+                        {venue.owner?.name === user?.name && (
+                        <button 
+                            onClick={() => navigate(`/venue/${venue.id}/edit`)}
+                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                        >
+                            Edit Venue
+                        </button>
                         )}
                     </div>
 
