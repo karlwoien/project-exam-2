@@ -68,3 +68,50 @@ export async function deleteVenue(venueId, token) {
         throw error;
     }
 }
+
+//UPDATE VENUE - PUT method
+export async function updateVenue(venueId, updatedData, token) {
+    try {
+        const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+                "X-Noroff-API-Key": API_KEY,
+            },
+            body: JSON.stringify(updatedData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to update venue: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error updating venue:", error.message);
+        throw error;
+    }
+}
+
+// fetch venue id
+// GET single venue
+export async function fetchVenue(venueId) {
+    try {
+        const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Noroff-API-Key": API_KEY,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch venue: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Error fetching venue:", error.message);
+        throw error;
+    }
+}
