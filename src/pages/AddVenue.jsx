@@ -1,4 +1,4 @@
-import AddVenueForm from "../components/Venue/AddVenueForm";
+import VenueForm from "../components/Venue/VenueForm";
 import useAuthStore from "../store/authStore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function AddVenue() {
 
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
-            <AddVenueForm />
+            <VenueForm />
         </div>
     );
 }
