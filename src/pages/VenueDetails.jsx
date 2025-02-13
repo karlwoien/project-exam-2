@@ -1,9 +1,9 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useVenue from "../hooks/useVenue";
-import { fetchVenueBookings, deleteVenue } from "../api";
+import { deleteVenue } from "../api";
 import useAuthStore from "../store/authStore";
-import { MdStar, MdDelete } from "react-icons/md";
+import { MdStar } from "react-icons/md";
 import LocationText from "../components/VenueInfo/LocationText";
 import AmenitiesText from "../components/VenueInfo/AmenitiesText";
 import VenueImage from "../components/VenueInfo/VenueImage";
@@ -15,26 +15,7 @@ export default function VenueDetails() {
     const navigate = useNavigate();
     const { venue, isLoading, error } = useVenue(id);
     const { user, token } = useAuthStore();
-    const [bookings, setBookings] = useState([]);
     const [isDeleting, setIsDeleting] = useState(false);
-
-    // Fetch eksisterende bookinger for dette stedet
-    useEffect(() => {
-        async function loadBookings() {
-            try {
-                if (venue) {
-                    const data = await fetchVenueBookings(venue.id, token);
-                    setBookings(data.data);
-                }
-            } catch (error) {
-                console.error("Error loading venue bookings:", error);
-            }
-        }
-
-        if (venue) {
-            loadBookings();
-        }
-    }, [venue, token]);
 
     if (isLoading) return <p>Loading venue details...</p>;
     if (error) return <p className="text-red-500">Error: {error}</p>;
@@ -62,7 +43,7 @@ export default function VenueDetails() {
 
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
-            {/* Image */}
+            {/* Venue Image */}
             <div className="mb-7">
                 <VenueImage media={venue.media} size="h-[500px]" className="w-full h-[500px] object-cover rounded-t-md" />
             </div>
@@ -70,32 +51,9 @@ export default function VenueDetails() {
             {/* Content Grid */}
             <div className="flex flex-wrap justify-between">
                 {/* Venue Info (Venstre kolonne) */}
-                <div className="mb-5 max-w-[600px]">
+                <div className="mb-5 max-w-[500px]">
                     <div className="flex justify-between items-center">
-                        <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5" />
-                        
-                        {/* Slett-knapp (kun for eier) */}
-                        {isOwner && (
-                            <button
-                                onClick={handleDelete}
-                                className="flex items-center space-x-2 text-red-500 hover:text-red-700 transition"
-                                disabled={isDeleting}
-                            >
-                                <MdDelete className="w-6 h-6" />
-                                <span>{isDeleting ? "Deleting..." : "Delete Venue"}</span>
-                            </button>
-                            
-                        )}
-
-                        {/*Edit knapp */}
-                        {venue.owner?.name === user?.name && (
-                        <button 
-                            onClick={() => navigate(`/venue/${venue.id}/edit`)}
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-                        >
-                            Edit Venue
-                        </button>
-                        )}
+                        <VenueTitle title={venue.name} as="h1" className="text-4xl mb-2.5 text-bg-highlight" />
                     </div>
 
                     {/* Rating */}
@@ -103,6 +61,7 @@ export default function VenueDetails() {
                         {Array.from({ length: 5 }, (_, index) => (
                             <MdStar key={index} className={index < venue.rating ? "text-bg-highlight" : "text-gray-300"} />
                         ))}
+                        <span className="text-gray-500">| Rating</span>
                     </div>
 
                     {/* Location */}
@@ -116,7 +75,9 @@ export default function VenueDetails() {
                     </div>
 
                     {/* Price */}
-                    <p className="mb-5">{venue.price} NOK/Night</p>
+                    <div className="mb-2.5">
+                        <p>{venue.price} NOK/Night</p>
+                    </div>
 
                     {/* Description */}
                     <div className="mb-5">
@@ -138,13 +99,52 @@ export default function VenueDetails() {
                     </div>
                 </div>
 
-                {/* Booking (Høyre kolonne) */}
-                <div className="px-6 shadow-lg rounded-md h-[500px]">
-                    <BookingCalendar
-                        bookings={bookings}
-                        maxGuests={venue.maxGuests}
-                        venueId={venue.id}
-                    />
+                {/* Booking Section // handling venue manager */}
+                <div className="px-6 shadow-lg rounded-md mt-4 md:mt-0 w-[400px]">
+                    {isOwner ? (
+                        <div className="mb-10">
+                            <h3 className="text-xl font-normal mb-2.5">Upcoming Bookings</h3>
+                            {venue.bookings && venue.bookings.length > 0 ? (
+                                <ul className="space-y-4">
+                                    {venue.bookings.map((booking) => (
+                                        <li key={booking.id} className="border p-3 rounded-md bg-gray-100">
+                                            <p><strong>From:</strong> {new Date(booking.dateFrom).toLocaleDateString()}</p>
+                                            <p><strong>To:</strong> {new Date(booking.dateTo).toLocaleDateString()}</p>
+                                            <p><strong>Guests:</strong> {booking.guests}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="text-gray-500">No bookings yet.</p>
+                            )}
+                            <h3 className="text-xl font-normal mb-2.5 mt-4">Manage your venue</h3>
+                            {/* Handling for Venue Manager */}
+                            <div className="flex space-x-3">
+                                {/* Edit Venue */}
+                                <button 
+                                    onClick={() => navigate(`/venue/${venue.id}/edit`)}
+                                    className="px-4 py-2 bg-bg-primary text-white rounded-full hover:bg-bg-highlight transition"
+                                >
+                                    Update
+                                </button>
+
+                                {/* Delete Venue */}
+                                <button
+                                    onClick={handleDelete}
+                                    className="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition"
+                                    disabled={isDeleting}
+                                >
+                                    {isDeleting ? "Deleting..." : "Delete"}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <BookingCalendar
+                            bookings={venue.bookings || []}
+                            maxGuests={venue.maxGuests}
+                            venueId={venue.id}
+                        />
+                    )}
                 </div>
             </div>
         </div>
