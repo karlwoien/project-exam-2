@@ -54,7 +54,7 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, l
                         className="block px-4 py-2 hover:bg-gray-100"
                         onClick={() => setDropdownOpen(false)}
                     >
-                        Add New Venue
+                        Add Venue
                     </Link>
                 )}
 
