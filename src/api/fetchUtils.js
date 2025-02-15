@@ -5,7 +5,7 @@ import useAuthStore from "../store/authStore";
 export async function fetchData(endpoint, params = {}) {
     try {
         // Bygg URL med query-parametere hvis de finnes
-        const url = new URL(`${API_HOLIDAZE_URL}${endpoint}`);
+        const url = new URL(`${API_HOLIDAZE_URL}${endpoint}?sort=created&order=desc`);
         Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
         const response = await fetch(url, {
