@@ -6,6 +6,7 @@ import { loginUser } from "../api";
 import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
+import { Link } from "react-router-dom";
 
 export default function Login() {
     const [error, setError] = useState(null);
@@ -29,17 +30,22 @@ export default function Login() {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md mt-40">
-            <h2 className="text-center text-2xl font-bold mb-4">Login</h2>
+        <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">
+            <h2 className="text-center text-2xl font-normal mb-4">Login to your account</h2>
             {error && <p className="text-red-500">{error}</p>}
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <InputField label="Email" register={register("email")} error={errors.email?.message} />
-                <InputField label="Password" type="password" register={register("password")} error={errors.password?.message} />
-
-                <button type="submit" className="w-full mt-4 bg-bg-primary text-white py-2 rounded-md hover:bg-bg-highlight">
+                <InputField label="Email" placeholder="name@stud.noroff.no" register={register("email")} error={errors.email?.message} />
+                <InputField label="Password" placeholder="Your password" type="password" register={register("password")} error={errors.password?.message} />
+                <button type="submit" className="w-full mt-2 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                     Login
                 </button>
+                <div className="flex space-x-2 my-6 justify-center">
+                    <p>Don't have an account?</p>
+                    <Link to="/register" className="text-bg-highlight font-medium text-lg">Register here</Link>
+                </div>
+                
+                
             </form>
         </div>
     );
