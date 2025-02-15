@@ -1,6 +1,7 @@
 import React from "react";
 import LinkButton from "../components/LinkButton";
 import { CiGlobe, CiCalendar, CiAirportSign1 } from "react-icons/ci";
+import LookaheadSearch from "../components/SearchVenues/LookaheadSearch";
 
 export default function Home() {
   return (
@@ -13,14 +14,15 @@ export default function Home() {
         {/* Content */}
         <div className="max-w-4xl mx-auto px-3 py-20 text-center text-white">
           <h1 className="text-6xl font-hero mb-5">YOUR NEXT HOLIDAY AWAITS</h1>
-          <p className="mb-10">Choose from a wide selection of verified venues, plan your stay with confidence, and enjoy a seamless booking experience - only with Holidaze.</p>
-          <LinkButton to="/venues" label="Explore venues" variant="accent" className="mb-8"/>
+          <p className="mb-5">Choose from a wide selection of verified venues, plan your stay with confidence, and enjoy a seamless booking experience - only with Holidaze.</p>
+          <LinkButton to="/venues" label="Explore venues" variant="accent" className="mb-12"/>
+          {/*Lookahead search*/}
+          <div className="max-w-5xl mx-auto px-6">
+            <LookaheadSearch />
+          </div>
         </div>
-
-        {/* Search functionality component goes here when ready*/}
         
       </section>
-
       {/* How Holidaze works Section */}
       <section className="max-w-5xl mx-auto px-6 py-16">
         <h2 className="text-4xl text-bg-highlight mb-2.5">
