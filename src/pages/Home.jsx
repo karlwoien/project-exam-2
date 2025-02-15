@@ -29,7 +29,7 @@ export default function Home() {
         <p className="mb-7">Planning your perfect getaway is simple with Holidaze. Follow these three easy steps to start your adventure.</p>
           {/* Feature 1 */}
           <div className="flex items-start mb-2.5">
-            <CiGlobe className="text-5xl text-bg-highlight mr-5" />
+            <CiGlobe className="text-4xl text-bg-highlight mr-5" />
             <div>
               <h3 className="text-lg">Explore amazing venues</h3>
               <p>Browse through our collection of unique and verified venues, tailored to your needs.</p>
@@ -58,11 +58,11 @@ export default function Home() {
       <section className="w-full bg-bg-accent py-16">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-4xl text-bg-primary mb-2.5">GET STARTED</h2>
-          <p className="mb-8">Register to unlock all features: book unique stays, list or manage your venues. Holidaze makes it easy for both travelers and venue managers.</p>
-          <h3 className="text-lg mb-2.5">For Travelers:</h3>
+          <p className="mb-5">Register to unlock all features: book unique stays, list or manage your venues. Holidaze makes it easy for both travelers and venue managers.</p>
+          <h3 className="text-lg">Travelers:</h3>
           <p className="mb-4">Find and book your dream venue hassle-free.</p>
-          <h3 className="text-lg mb-2.5">For Travelers:</h3>
-          <p className="mb-8">Easily create, update, and manage your venues and bookings.</p>
+          <h3 className="text-lg">Venue Managers:</h3>
+          <p className="mb-5">Easily create, update, and manage your venues and bookings.</p>
           <LinkButton to="/register" label="Register now" variant="primary" />
         </div>
       </section>
