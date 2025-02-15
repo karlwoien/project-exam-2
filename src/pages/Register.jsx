@@ -7,6 +7,7 @@ import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 import AccountTypeSelector from "../forms/AccountTypeSelector";
+import { Link } from "react-router-dom";
 
 export default function Register() {
     const [error, setError] = useState(null);
@@ -40,21 +41,32 @@ export default function Register() {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-md mt-40">
-            <h2 className="text-center text-2xl font-bold mb-4">Register an account</h2>
+        <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">
+            <h2 className="text-center text-2xl font-normal mb-4">Register an account</h2>
             {error && <p className="text-red-500">{error}</p>}
             
             <form onSubmit={handleSubmit(onSubmit)}>
                 <AccountTypeSelector selected={venueManager} setSelected={setVenueManager} />
-                
-                <InputField label="Name" register={register("name")} error={errors.name?.message} />
-                <InputField label="Email" register={register("email")} error={errors.email?.message} />
-                <InputField label="Password" type="password" register={register("password")} error={errors.password?.message} />
-                <InputField label="Confirm Password" type="password" register={register("confirmPassword")} error={errors.confirmPassword?.message} />
+                {/* Dynamic Account Type Description */}
+                <div className="text-base mb-4">
+                    {venueManager ? (
+                        <p className="text-xs">A Venue Mangager account allows you to list and manage venues for booking. If you want to book venues, switch to Traveler.</p>
+                    ) : (
+                        <p className="text-xs">A Traveler account is a customer account used for booking venues. If you want to list venues, switch to Venue Manager.</p>
+                    )}
+                </div>
+                <InputField label="Name" placeholder="Name" register={register("name")} error={errors.name?.message} />
+                <InputField label="Email" placeholder="name@stud.noroff.no" register={register("email")} error={errors.email?.message} />
+                <InputField label="Password" placeholder="Password" type="password" register={register("password")} error={errors.password?.message} />
+                <InputField label="Confirm Password" placeholder="Confirm password" type="password" register={register("confirmPassword")} error={errors.confirmPassword?.message} />
 
-                <button type="submit" className="w-full mt-4 bg-bg-primary text-white py-2 rounded-md hover:bg-bg-highlight">
+                <button type="submit" className="w-full mt-2 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                     Register
                 </button>
+                <div className="flex space-x-2 my-6 justify-center">
+                    <p>Already have a user?</p>
+                    <Link to="/login" className="text-bg-highlight font-medium text-lg">Login here</Link>
+                </div>
             </form>
         </div>
     );
