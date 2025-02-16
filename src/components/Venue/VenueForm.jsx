@@ -5,7 +5,7 @@ import venueSchema from "../../forms/validation/venueSchema";
 import { createVenue, updateVenue } from "../../api/venues";
 import useAuthStore from "../../store/authStore";
 import { CiCirclePlus } from "react-icons/ci";
-import { MdClose } from "react-icons/md";
+import { MdClose, MdStar } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 export default function VenueForm({ venue }) {
@@ -24,12 +24,19 @@ export default function VenueForm({ venue }) {
             media: [{ url: "" }],
             price: "",
             maxGuests: "",
+            rating: 0,
             meta: { wifi: false, parking: false, breakfast: false, pets: false },
             location: { address: "", city: "", zip: "", country: "" }
         },
     });
 
     const media = watch("media");
+    const rating = watch ("rating")
+
+    // Funksjon for å sette rating
+    const handleRatingClick = (index) => {
+        setValue("rating", index + 1);
+    };
 
     useEffect(() => {
         if (venue) {
@@ -81,7 +88,7 @@ export default function VenueForm({ venue }) {
             {/* Title */}
             <div className="mb-2.5">
                 <label className="block">Title</label>
-                <input {...register("name")} placeholder="Pacific View" className={inputClass} />
+                <input {...register("name")} placeholder="Venue title" className={inputClass} />
                 <p className="text-red-500">{errors.name?.message}</p>
             </div>
 
@@ -115,11 +122,11 @@ export default function VenueForm({ venue }) {
             <div className="flex space-x-2 mb-2.5">
                 <div>
                     <label>Price/night</label>
-                    <input {...register("price")} placeholder="750" className={inputClass} />
+                    <input {...register("price")} placeholder="Enter amount" className={inputClass} />
                 </div>
                 <div>
                     <label>Max guests</label>
-                    <input {...register("maxGuests")} placeholder="6" className={inputClass} />
+                    <input {...register("maxGuests")} placeholder="Enter number" className={inputClass} />
                 </div>
             </div>
             <p className="text-red-500">{errors.price?.message || errors.maxGuests?.message}</p>
@@ -133,6 +140,21 @@ export default function VenueForm({ venue }) {
                             <Controller control={control} name={`meta.${amenity}`} render={({ field }) => <input type="checkbox" {...field} checked={field.value} />} />
                             <span>{amenity.charAt(0).toUpperCase() + amenity.slice(1)}</span>
                         </label>
+                    ))}
+                </div>
+            </div>
+
+            {/* Rating Section */}
+            <div className="mb-2.5">
+                <label className="block">Rating</label>
+                <div className="flex items-center space-x-1">
+                    {Array.from({ length: 5 }, (_, index) => (
+                        <MdStar
+                            key={index}
+                            className={index < rating ? "text-bg-highlight cursor-pointer" : "text-gray-300 cursor-pointer"}
+                            onClick={() => handleRatingClick(index)}
+                            size={24}
+                        />
                     ))}
                 </div>
             </div>
