@@ -18,11 +18,6 @@ export default function Profile() {
 
             {/* Conditional Display */}
             {user.venueManager ? <ProfileVenues venues={venues} /> : <ProfileBookings bookings={bookings} />}
-
-            {/* Logout Button */}
-            <button onClick={logout} className="w-full mt-6 bg-red-500 text-white py-2 rounded-md hover:bg-red-600">
-                Logout
-            </button>
         </div>
     );
 }
