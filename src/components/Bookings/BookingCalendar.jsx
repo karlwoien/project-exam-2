@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createBooking } from "../../api/bookings";
@@ -11,6 +12,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
     const { user, token } = useAuthStore();
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const navigate = useNavigate();
 
     // Finn bookede datoer for å deaktivere dem i kalenderen
     const bookedDates = bookings.flatMap((booking) => {
@@ -50,10 +52,11 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
     }
 
     return (
-        <div className="p-5 bg-white rounded-lg ">
-            <h3 className="text-2xl mb-2">Select dates</h3>
+        <div>
+            <h3 className="text-2xl mb-2 text-bg-primary">Reserve your stay</h3>
+            <h4 className="text-lg mb-1 text-bg-primary">Select dates</h4>
 
-            {/* 📅 Inline DatePicker */}
+            {/* Inline DatePicker */}
             <DatePicker
                 selected={startDate}
                 onChange={(update) => setDateRange(update)}
@@ -63,7 +66,8 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
                 inline
                 excludeDates={bookedDates}
                 minDate={new Date()}
-                className="border p-2 rounded w-full"
+                calendarStartDay={1}
+                highlightDates={[{ "booked-dates": bookedDates }]}
             />
 
             {/* Guest Selection */}
@@ -83,13 +87,31 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
             {error && <p className="text-red-500 mt-2">{error}</p>}
             {success && <p className="text-green-500 mt-2">{success}</p>}
 
-            {/* Submit Button */}
-            <button
-                onClick={handleBooking}
-                className="mt-5 bg-bg-primary text-white py-2 px-4 rounded-full w-full hover:bg-bg-highlight"
-            >
-                Reserve
-            </button>
+            {/* Hindre Venue Manager fra å booke */}
+            {user?.venueManager && (
+                <p className="mt-4 text-red-500 text-sm">
+                    Please use a Traveler account to reserve.
+                </p>
+            )}
+
+            {/* Conditional Buttons */}
+            {user ? (
+                !user.venueManager ? (
+                    <button
+                        onClick={handleBooking}
+                        className="mt-5 bg-bg-primary text-white py-2 px-4 rounded-full w-full hover:bg-bg-highlight"
+                    >
+                        Reserve
+                    </button>
+                ) : null
+            ) : (
+                <button
+                    onClick={() => navigate("/login")}
+                    className="mt-5 bg-gray-400 text-white py-2 px-4 rounded-full w-full hover:bg-gray-500"
+                >
+                Login to reserve
+                </button>
+            )}
         </div>
     );
 }
