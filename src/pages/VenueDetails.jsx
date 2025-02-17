@@ -70,13 +70,14 @@ export default function VenueDetails() {
                     </div>
 
                     {/* Amenities */}
-                    <div className="mb-2.5">
-                        <AmenitiesText meta={venue.meta} />
+                    <div className="mb-2.5 flex space-x-2">
+                            <p className="font-normal">Amenities:</p>
+                            <AmenitiesText meta={venue.meta} />
                     </div>
 
                     {/* Price */}
                     <div className="mb-2.5">
-                        <p>{venue.price} NOK/Night</p>
+                        <p className="font-normal">{venue.price} NOK/Night</p>
                     </div>
 
                     {/* Description */}
