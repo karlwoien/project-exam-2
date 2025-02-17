@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import LocationText from "../VenueInfo/LocationText";
-import AmenitiesText from "../VenueInfo/AmenitiesText";
 import VenueImage from "../VenueInfo/VenueImage";
 import VenueTitle from "../VenueInfo/VenueTitle";
 import { MdStar } from "react-icons/md";
@@ -9,7 +8,7 @@ export default function VenueCard ({venue}) {
 
     return (
         <Link to={`/venue/${venue.id}`}>
-        <div className="card flex flex-col hover:scale-105">
+        <div className="card flex flex-col hover:scale-105 active:scale-100 transition-transform duration-300 ease-in-out">
             {/*Image */}
             <div className="mb-2.5">
                 <VenueImage media={venue.media} className="w-full h-[200px] object-cover rounded-t-md" />

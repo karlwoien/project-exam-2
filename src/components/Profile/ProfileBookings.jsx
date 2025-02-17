@@ -23,7 +23,7 @@ export default function ProfileBookings({ bookings }) {
                     <Link
                         key={booking.id}
                         to={`/venue/${booking.venue.id}`}
-                        className="p-4 border rounded-md shadow-sm flex items-center transition-transform transform hover:scale-105 space-x-4"
+                        className="p-4 border rounded-md shadow-sm flex items-center space-x-4 hover:scale-105 active:scale-100 transition-transform duration-300 ease-in-out"
                     >
                         <div className="flex-1">
                             <h4 className="text-lg">{booking.venue.name}</h4>
