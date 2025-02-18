@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 import { Link } from "react-router-dom";
 import { useTitle } from "../hooks/useTitle";
+import { toast } from "react-toastify";
 
 export default function Login() {
     const [error, setError] = useState(null);
@@ -23,10 +24,12 @@ export default function Login() {
         try {
             const response = await loginUser(data);
             setUser(response.data, response.data.accessToken); // Oppdater Zustand state
-            alert("Login successful!");
-            navigate("/profile");
-        } catch (err) {
-            setError(err.message);
+            toast.success("Login successful! Redirecting..", {
+                autoClose: 1000,
+                onClose: () => navigate("/profile"),
+            });
+        } catch (error) {
+            toast.error("Invalid email or password. Please try again.");
         }
     };
 
