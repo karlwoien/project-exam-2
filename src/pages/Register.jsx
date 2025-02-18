@@ -63,9 +63,9 @@ export default function Register() {
                 <button type="submit" className="w-full mt-2 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                     Register
                 </button>
-                <div className="flex space-x-2 my-6 justify-center">
-                    <p>Already have a user?</p>
-                    <Link to="/login" className="text-bg-highlight font-medium text-lg">Login here</Link>
+                <div className="flex space-x-2 mb-6 mt-3 justify-center">
+                    <p className="text-sm">Already have a user?</p>
+                    <Link to="/login" className="text-bg-primary text-sm hover:underline">Login here</Link>
                 </div>
             </form>
         </div>

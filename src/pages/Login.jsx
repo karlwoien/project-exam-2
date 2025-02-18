@@ -40,9 +40,9 @@ export default function Login() {
                 <button type="submit" className="w-full mt-2 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                     Login
                 </button>
-                <div className="flex space-x-2 my-6 justify-center">
-                    <p>Don't have an account?</p>
-                    <Link to="/register" className="text-bg-highlight font-medium text-lg">Register here</Link>
+                <div className="flex space-x-2 mb-6 mt-3 justify-center">
+                    <p className="text-sm">Don't have an account?</p>
+                    <Link to="/register" className="text-bg-primary text-sm hover:underline">Register here</Link>
                 </div>
                 
                 
