@@ -1,0 +1,29 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { deleteVenue } from "../api";
+import useAuthStore from "../store/authStore";
+
+export default function useVenueActions(venueId) {
+    const { token } = useAuthStore();
+    const navigate = useNavigate();
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this venue?");
+        if (!confirmDelete) return;
+
+        setIsDeleting(true);
+        try {
+            await deleteVenue(venueId, token);
+            alert("Venue deleted successfully!");
+            navigate("/profile"); // Send brukeren tilbake til profilen
+        } catch (error) {
+            console.error("Error deleting venue:", error.message);
+            alert("Failed to delete venue.");
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    return { handleDelete, isDeleting };
+}
