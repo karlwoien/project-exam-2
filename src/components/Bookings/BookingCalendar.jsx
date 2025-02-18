@@ -53,8 +53,8 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
     return (
         <div>
-            <h3 className="text-2xl mb-2 text-bg-primary">Reserve your stay</h3>
-            <h4 className="text-lg mb-1 text-bg-primary">Select dates</h4>
+            <h3 className="text-2xl mb-1">Reserve your stay</h3>
+            <h4 className="text-lg mb-1">Select dates</h4>
 
             {/* Inline DatePicker */}
             <DatePicker
