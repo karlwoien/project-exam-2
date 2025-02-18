@@ -5,6 +5,7 @@ import useAuthStore from "../../store/authStore";
 import { logoutUser } from "../../utils/authUtils";
 import ProfileDropdown from "./ProfileDropdown";
 import MobileMenu from "./MobileMenu";
+import LinkButton from "../LinkButton";
 
 export default function Header() {
     const location = useLocation();
@@ -39,9 +40,14 @@ export default function Header() {
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center space-x-5">
-                    <nav className="space-x-5 text-lg">
-                        <Link to="/" className="hover:text-bg-highlight">Home</Link>
-                        <Link to="/venues" className="hover:text-bg-highlight">Venues</Link>
+                    <nav className="space-x-5 text-lg flex">
+                        <div className="hover:scale-105 transition-transform duration-300 hover:text-bg-highlight">
+                            <Link to="/" >Home</Link>
+                        </div>
+                        <div className="hover:scale-105 transition-transform duration-300 hover:text-bg-highlight">
+                         <Link to="/venues">Venues</Link>
+                        </div>
+                        
                     </nav>
 
                     {/* Profile Dropdown or Login/Register */}
@@ -49,8 +55,8 @@ export default function Header() {
                         <ProfileDropdown user={user} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} logoutUser={logoutUser} />
                     ) : (
                         <div className="space-x-5">
-                            <Link to="/login" className="hover:text-bg-highlight">Login</Link>
-                            <Link to="/register" className="hover:text-bg-highlight">Register</Link>
+                            <LinkButton to="/login" label="Login" variant="muted"/>
+                            <LinkButton to="/register" label="Register" variant="highlight" />
                         </div>
                     )}
                 </div>

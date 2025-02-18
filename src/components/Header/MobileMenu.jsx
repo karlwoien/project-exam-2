@@ -8,7 +8,7 @@ export default function MobileMenu({ user, menuOpen, setMenuOpen, logoutUser }) 
                 menuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
             } md:hidden`}
         >
-            <div className="absolute top-0 right-0 w-64 h-full bg-white text-gray-900 shadow-lg p-6">
+            <div className="absolute top-0 right-0 w-64 h-full bg-white text-black shadow-lg p-6">
                 {/* Close Button */}
                 <button
                     onClick={() => setMenuOpen(false)}
@@ -28,12 +28,13 @@ export default function MobileMenu({ user, menuOpen, setMenuOpen, logoutUser }) 
                             {user.venueManager && (
                                 <Link to="/venues/new" className="hover:text-bg-highlight" onClick={() => setMenuOpen(false)}>Add Venue</Link>
                             )}
+                            <div className="border-t border-gray-300"></div>
                             <button
                                 onClick={() => {
                                     logoutUser();
                                     setMenuOpen(false);
                                 }}
-                                className="text-red-500 hover:bg-gray-100 text-left px-4 py-2 rounded-md"
+                                className="text-red-500 text-left py-2 rounded-full"
                             >
                                 Logout
                             </button>
