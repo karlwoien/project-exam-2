@@ -29,7 +29,7 @@ export default function VenueDetails() {
                 {/* Venue Info (Venstre kolonne) */}
                 <VenueContent venue={venue} />
                 {/* Booking Section // handling venue manager */}
-                <div className="w-full max-w-[400px] mx-auto md:mx-0">
+                <div className="mx-auto md:mx-0">
                     {isOwner ? (
                         <UpcomingBookings
                             bookings={venue.bookings || []}

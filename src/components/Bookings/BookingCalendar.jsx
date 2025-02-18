@@ -52,7 +52,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
     }
 
     return (
-        <div>
+        <div className="w-full max-w-[350px]">
             <h3 className="text-2xl mb-1">Reserve your stay</h3>
             <h4 className="text-lg mb-1">Select dates</h4>
 
@@ -72,15 +72,17 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
             {/* Guest Selection */}
             <div className="mt-3">
-                <label className="block mb-2">Number of guests</label>
-                <input
-                    type="number"
-                    value={guests}
-                    onChange={(e) => setGuests(Number(e.target.value))}
-                    min="1"
-                    max={maxGuests}
-                    className="border p-2 rounded w-full"
-                />
+                <div className="flex items-center justify-between">
+                    <label className="text-lg font-normal">How many guests?</label>
+                    <input
+                        type="number"
+                        value={guests}
+                        onChange={(e) => setGuests(Number(e.target.value))}
+                        min="1"
+                        max={maxGuests}
+                        className="border p-2 rounded-lg w-1/2 text-center focus:outline-none focus:ring-2 focus:ring-bg-highlight focus:border-transparent"
+                    />
+                </div>
             </div>
 
             {/* Error / Success Messages */}
