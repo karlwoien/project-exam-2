@@ -22,14 +22,14 @@ export default function VenueDetails() {
         <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
             {/* Venue Image */}
             <div className="mb-7">
-                <VenueImage media={venue.media} size="h-[500px]" className="w-full h-[500px] object-cover rounded-t-md" />
+                <VenueImage media={venue.media} className="w-full h-auto max-h-[500px] object-cover rounded-t-md" />
             </div>
             {/* Content Grid */}
-            <div className="flex flex-wrap justify-between">
+            <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] items-start">
                 {/* Venue Info (Venstre kolonne) */}
                 <VenueContent venue={venue} />
                 {/* Booking Section // handling venue manager */}
-                <div>
+                <div className="w-full max-w-[400px] mx-auto md:mx-0">
                     {isOwner ? (
                         <UpcomingBookings
                             bookings={venue.bookings || []}
