@@ -35,7 +35,7 @@ export default function LookaheadSearch() {
                             className="flex items-center p-2 cursor-pointer hover:bg-gray-100"
                         >
                             <img
-                                src={venue.media?.[0]?.url || "https://via.placeholder.com/50"}
+                                src={venue.media?.[0]?.url}
                                 alt={venue.media?.[0]?.alt || "Venue image"}
                                 className="w-10 h-10 rounded-md object-cover mr-3"
                             />
