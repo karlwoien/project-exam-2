@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import LinkButton from "../LinkButton";
+import LinkButton from "../Button/LinkButton";
 
 export default function ProfileBookings({ bookings }) {
     // Filtrer ut kun kommende bookinger
