@@ -13,7 +13,7 @@ export default function ProfileVenues({ venues }) {
     return (
         <div className="mt-8">
             <h3 className="text-2xl">Your Listed Venues</h3>
-            <p className="text-gray-600 mb-4">Click on your venue to manage it or see upcoming bookings.</p>
+            <p className="text-gray-600 mb-4 text-sm">Click on your venue to manage it or see upcoming bookings.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {venues.map((venue) => (
                     <Link 
