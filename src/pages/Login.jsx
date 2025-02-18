@@ -7,6 +7,7 @@ import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 import { Link } from "react-router-dom";
+import { useTitle } from "../hooks/useTitle";
 
 export default function Login() {
     const [error, setError] = useState(null);
@@ -28,6 +29,8 @@ export default function Login() {
             setError(err.message);
         }
     };
+
+    useTitle("Login")
 
     return (
         <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">

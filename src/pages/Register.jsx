@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
 import AccountTypeSelector from "../forms/AccountTypeSelector";
 import { Link } from "react-router-dom";
+import { useTitle } from "../hooks/useTitle";
 
 export default function Register() {
     const [error, setError] = useState(null);
@@ -39,6 +40,8 @@ export default function Register() {
             setError(err.message);
         }
     };
+
+    useTitle("Register")
 
     return (
         <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">

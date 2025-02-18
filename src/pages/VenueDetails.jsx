@@ -6,12 +6,15 @@ import BookingCalendar from "../components/Bookings/BookingCalendar";
 import UpcomingBookings from "../components/VenueInfo/UpcomingBookings";
 import VenueContent from "../components/VenueInfo/VenueContent";
 import useVenueActions from "../hooks/useVenueActions";
+import { useTitle } from "../hooks/useTitle";
 
 export default function VenueDetails() {
     const { id } = useParams();
     const { venue, isLoading, error } = useVenue(id);
     const { user } = useAuthStore();
     const { handleDelete, isDeleting } = useVenueActions(id);
+
+    useTitle(venue ? venue.name : "Loading...");
 
     if (isLoading) return <p>Loading venue details...</p>;
     if (error) return <p className="text-red-500">Error: {error}</p>;

@@ -2,9 +2,11 @@ import React from "react";
 import VenueCard from "../components/VenueCard";
 import Search from "../components/SearchVenues/VenueSearch";
 import useVenues from "../hooks/useVenues";
+import { useTitle } from "../hooks/useTitle";
 
 export default function Venues() {
-    const { venues, isLoading, error, fetchVenues } = useVenues(); // Bruk hooken
+    useTitle("Venues")
+    const { venues, isLoading, error, fetchVenues } = useVenues();
 
     const handleSearch = (query) => {
       fetchVenues(query.trim() || ""); // Bruk query eller hent alle venues
