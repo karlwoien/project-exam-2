@@ -17,30 +17,31 @@ export default function VenueContent({ venue }) {
                 ))}
                 <span className="text-gray-500">| Rating</span>
             </div>
-
             {/* Location */}
-            <div className="flex items-center mb-2.5">
+            <div className="flex items-center mb-1">
                 <LocationText location={venue.location} />
             </div>
-
             {/* Amenities */}
-            <div className="mb-2.5 flex space-x-2">
+            <div className="mb-1 flex space-x-2">
                 <p className="font-normal">Amenities:</p>
                 <AmenitiesText meta={venue.meta} />
             </div>
-
+            {/* Max guests */}
+            <div className="mb-1 flex space-x-2">
+                <p className="font-normal">Maximum guests:</p>
+                <p>{venue.maxGuests}</p>
+            </div>
             {/* Price */}
             <div className="mb-2.5">
                 <p className="font-normal">{venue.price} NOK/Night</p>
             </div>
-
             {/* Description */}
             <div className="mb-5">
                 <p className="font-semibold">Description</p>
                 <p>{venue.description}</p>
             </div>
-
             {/* Host Info */}
+            <div className="border-t border-gray-300 my-4"></div>
             <div className="flex items-center mt-5">
                 <img
                     src={venue.owner?.avatar?.url || "https://via.placeholder.com/50"}
@@ -52,6 +53,7 @@ export default function VenueContent({ venue }) {
                     <p>{venue.owner?.name || "Unknown Venue Manager"}</p>
                 </div>
             </div>
+            <div className="border-t border-gray-300 my-4"></div>
         </div>
     );
 }
