@@ -43,7 +43,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
         try {
             await createBooking({ dateFrom: startDate, dateTo: endDate, guests, venueId, token });
-            toast.success("Reservation successful! Redirecting..", {
+            toast.success("Reservation successful!", {
                 position: "top-center",
                 autoClose: 1000,
                 onClose: () => navigate("/profile"),

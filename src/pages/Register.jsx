@@ -40,7 +40,7 @@ export default function Register() {
     
             setUser(loginResponse.data, loginResponse.data.accessToken);
     
-            toast.success("Registration successful! Redirecting...", {
+            toast.success("Registration successful!", {
                 position: "top-center",
                 autoClose: 1000,
                 onClose: () => navigate("/profile"),

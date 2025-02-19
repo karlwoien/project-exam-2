@@ -24,7 +24,7 @@ export default function Login() {
         try {
             const response = await loginUser(data);
             setUser(response.data, response.data.accessToken);
-            toast.success("Login successful! Redirecting..", {
+            toast.success("Login successful!", {
                 position: "top-center",
                 autoClose: 1000,
                 onClose: () => navigate("/profile"),
