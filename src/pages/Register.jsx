@@ -57,22 +57,20 @@ export default function Register() {
     return (
         <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">
             <h2 className="text-center text-2xl font-normal mb-4">Register an account</h2>
-            {error && <p className="text-red-500">{error}</p>}
-            
             <form onSubmit={handleSubmit(onSubmit)}>
                 <AccountTypeSelector selected={venueManager} setSelected={setVenueManager} />
                 {/* Dynamic Account Type Description */}
                 <div className="text-base mb-4">
                     {venueManager ? (
-                        <p className="text-xs">A Venue Mangager account allows you to list and manage venues for booking. If you want to book venues, switch to Traveler.</p>
+                        <p className="text-xs">A Venue Manager account allows you to list and manage venues for booking. If you want to book venues, switch to Traveler.</p>
                     ) : (
                         <p className="text-xs">A Traveler account is a customer account used for booking venues. If you want to list venues, switch to Venue Manager.</p>
                     )}
                 </div>
-                <InputField label="Name" placeholder="Username" register={register("name")} error={errors.name?.message} />
-                <InputField label="Email" placeholder="name@stud.noroff.no" register={register("email")} error={errors.email?.message} />
-                <InputField label="Password" placeholder="Password" type="password" register={register("password")} error={errors.password?.message} />
-                <InputField label="Confirm Password" placeholder="Confirm password" type="password" register={register("confirmPassword")} error={errors.confirmPassword?.message} />
+                <InputField id="name" label="Name" placeholder="Username" register={register("name")} error={errors.name?.message} aria-label="Name" />
+                <InputField id="email" label="Email" placeholder="name@stud.noroff.no" register={register("email")} error={errors.email?.message} aria-label="Email address"/>
+                <InputField id="password" label="Password" placeholder="Enter a strong password" type="password" register={register("password")} error={errors.password?.message} aria-label="Password" />
+                <InputField id="confirmPassword" label="Confirm Password" placeholder="Confirm your password" type="password" register={register("confirmPassword")} error={errors.confirmPassword?.message} aria-label="Confirm password"/>
 
                 <button type="submit" className="w-full mt-2 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                     Register
@@ -81,6 +79,7 @@ export default function Register() {
                     <p className="text-sm">Already have a user?</p>
                     <Link to="/login" className="text-bg-primary text-sm hover:underline">Login here</Link>
                 </div>
+                {error && <p className="text-red-500">{error}</p>}
             </form>
         </div>
     );
