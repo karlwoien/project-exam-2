@@ -3,6 +3,7 @@ import VenueCard from "../components/VenueCard";
 import Search from "../components/SearchVenues/VenueSearch";
 import useVenues from "../hooks/useVenues";
 import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function Venues() {
     useTitle("Venues")
@@ -13,7 +14,7 @@ export default function Venues() {
     };
 
     if (isLoading) {
-        return <p className="pt-20">Loading venues...</p>;
+        return <LoadingSpinner />;
     }
 
     if (error) {
