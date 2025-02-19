@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../forms/validation/userSchema";
-import { registerUser } from "../api";
+import { registerUser, loginUser } from "../api";
 import useAuthStore from "../store/authStore";
 import { useNavigate } from "react-router-dom";
 import InputField from "../forms/InputField";
@@ -30,18 +30,25 @@ export default function Register() {
                 password: data.password,
                 venueManager: venueManager,
             };
+    
+            await registerUser(userPayload);
 
-            const response = await registerUser(userPayload);
-            setUser(response.data, response.data.accessToken); // Oppdater Zustand state
-
-            toast.success("Registration successful! Redirecting..", {
+            const loginResponse = await loginUser({ 
+                email: data.email, 
+                password: data.password 
+            });
+    
+            setUser(loginResponse.data, loginResponse.data.accessToken);
+    
+            toast.success("Registration successful! Redirecting...", {
                 position: "top-center",
                 autoClose: 1000,
                 onClose: () => navigate("/profile"),
             });
+    
         } catch (err) {
             console.error("Error during registration:", err.message);
-            setError(err.message);
+            setError("Registration failed. Please try again.");
         }
     };
 
