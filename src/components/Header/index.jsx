@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      className={`${isHome ? "fixed" : "sticky"} top-0 left-0 w-full z-50 transition-all duration-300 ${
         isHome && !scrolled
           ? "bg-transparent text-white"
           : "bg-bg-primary text-white"
