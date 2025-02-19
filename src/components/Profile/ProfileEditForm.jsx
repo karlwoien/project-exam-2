@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../../forms/validation/userSchema";
 import { updateUserProfile } from "../../api"; 
 import useAuthStore from "../../store/authStore";
+import { toast } from "react-toastify";
 
 export default function ProfileEditForm({ profile, onClose }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,10 +27,18 @@ export default function ProfileEditForm({ profile, onClose }) {
     
             const updatedProfile = await updateUserProfile(user.name, updatedData, token);
             updateProfile(updatedProfile.data);
-            alert("Profile updated successfully!");
-            onClose();
-        } catch (err) {
-            console.error("Error updating profile:", err.message);
+            toast.success("Update successful!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => {
+                onClose();
+            },
+            });
+        } catch (error) {
+            toast.error ("Update failed. Please try again later!", {
+                position: "top-center",
+                autoClose: 1000,
+            });
         }
     };
 
