@@ -91,7 +91,6 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
             {/* Error / Success Messages */}
             {error && <p className="text-red-500 mt-2">{error}</p>}
-            {success && <p className="text-green-500 mt-2">{success}</p>}
 
             {/* Hindre Venue Manager fra å booke */}
             {user?.venueManager && (
