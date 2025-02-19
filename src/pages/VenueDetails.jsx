@@ -7,6 +7,7 @@ import UpcomingBookings from "../components/VenueInfo/UpcomingBookings";
 import VenueContent from "../components/VenueInfo/VenueContent";
 import useVenueActions from "../hooks/useVenueActions";
 import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function VenueDetails() {
     const { id } = useParams();
@@ -16,13 +17,13 @@ export default function VenueDetails() {
 
     useTitle(venue ? venue.name : "Loading...");
 
-    if (isLoading) return <p>Loading venue details...</p>;
+    if (isLoading) return <LoadingSpinner />;
     if (error) return <p className="text-red-500">Error: {error}</p>;
 
     const isOwner = user && venue.owner?.name === user.name;
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto px-6 py-16">
             {/* Venue Image */}
             <div className="mb-7">
                 <VenueImage media={venue.media} className="w-full h-auto max-h-[500px] object-cover rounded-t-md" />
