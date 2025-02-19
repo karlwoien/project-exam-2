@@ -15,7 +15,7 @@ export default function EditVenue() {
     useTitle("Edit venue")
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto">
             {venue ? <VenueForm venue={venue} /> : <p className="text-center text-gray-500">Loading...</p>}
         </div>
     );

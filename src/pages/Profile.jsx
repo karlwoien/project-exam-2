@@ -15,7 +15,7 @@ export default function Profile() {
     useTitle(user ? user.name : "Loading...");
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto">
             {/* Profile Info */}
             {profile && <ProfileCard profile={profile} />}
 

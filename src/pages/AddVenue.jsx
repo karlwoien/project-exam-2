@@ -17,7 +17,7 @@ export default function AddVenue() {
     useTitle("Add venue")
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto">
             <VenueForm />
         </div>
     );

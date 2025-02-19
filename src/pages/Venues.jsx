@@ -21,7 +21,7 @@ export default function Venues() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto">
             <h1 className="text-bg-highlight text-4xl mb-5">EXPLORE VENUES</h1>
             {/* Search input and filter option */}
             <div className="w-full">

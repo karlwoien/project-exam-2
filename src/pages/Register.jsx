@@ -55,7 +55,7 @@ export default function Register() {
     useTitle("Register")
 
     return (
-        <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary mt-40">
+        <div className="max-w-md mx-auto p-6 rounded-lg border border-bg-primary">
             <h2 className="text-center text-2xl font-normal mb-4">Register an account</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <AccountTypeSelector selected={venueManager} setSelected={setVenueManager} />

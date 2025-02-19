@@ -23,7 +23,7 @@ export default function VenueDetails() {
     const isOwner = user && venue.owner?.name === user.name;
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16">
+        <div className="max-w-5xl mx-auto">
             {/* Venue Image */}
             <div className="mb-7">
                 <VenueImage media={venue.media} className="w-full h-auto max-h-[500px] object-cover rounded-t-md" />
