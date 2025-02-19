@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createBooking } from "../../api/bookings";
 import useAuthStore from "../../store/authStore";
+import { toast } from "react-toastify";
 
 export default function BookingCalendar({ bookings, maxGuests, venueId }) {
     const [dateRange, setDateRange] = useState([null, null]); // Start og sluttdato
@@ -11,7 +12,6 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
     const [guests, setGuests] = useState(1);
     const { user, token } = useAuthStore();
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
 
     // Finn bookede datoer for å deaktivere dem i kalenderen
@@ -42,12 +42,16 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
         }
 
         try {
-            const response = await createBooking({ dateFrom: startDate, dateTo: endDate, guests, venueId, token });
-            setSuccess("Booking successful!");
+            await createBooking({ dateFrom: startDate, dateTo: endDate, guests, venueId, token });
+            toast.success("Reservation successful! Redirecting..", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/profile"),
+            });
             setDateRange([null, null]);
             setGuests(1);
         } catch (err) {
-            setError("Error creating booking.");
+            setError("Error creating booking. Please try again.");
         }
     }
 
