@@ -9,6 +9,7 @@ import InputField from "../forms/InputField";
 import AccountTypeSelector from "../forms/AccountTypeSelector";
 import { Link } from "react-router-dom";
 import { useTitle } from "../hooks/useTitle";
+import { toast } from "react-toastify";
 
 export default function Register() {
     const [error, setError] = useState(null);
@@ -33,8 +34,11 @@ export default function Register() {
             const response = await registerUser(userPayload);
             setUser(response.data, response.data.accessToken); // Oppdater Zustand state
 
-            alert("Registration successful!");
-            navigate("/profile");
+            toast.success("Registration successful! Redirecting..", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/profile"),
+            });
         } catch (err) {
             console.error("Error during registration:", err.message);
             setError(err.message);
@@ -58,7 +62,7 @@ export default function Register() {
                         <p className="text-xs">A Traveler account is a customer account used for booking venues. If you want to list venues, switch to Venue Manager.</p>
                     )}
                 </div>
-                <InputField label="Name" placeholder="Name" register={register("name")} error={errors.name?.message} />
+                <InputField label="Name" placeholder="Username" register={register("name")} error={errors.name?.message} />
                 <InputField label="Email" placeholder="name@stud.noroff.no" register={register("email")} error={errors.email?.message} />
                 <InputField label="Password" placeholder="Password" type="password" register={register("password")} error={errors.password?.message} />
                 <InputField label="Confirm Password" placeholder="Confirm password" type="password" register={register("confirmPassword")} error={errors.confirmPassword?.message} />
