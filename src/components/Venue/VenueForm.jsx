@@ -7,13 +7,13 @@ import useAuthStore from "../../store/authStore";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdClose, MdStar } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function VenueForm({ venue }) {
     const { token } = useAuthStore();
     const navigate = useNavigate();
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
-    const isEditing = !!venue; // Sjekker om det er redigering
+    const isEditing = !!venue;
 
     // Hook Form setup
     const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useForm({
@@ -51,7 +51,6 @@ export default function VenueForm({ venue }) {
     const onSubmit = async (data) => {
         try {
             setError(null);
-            setSuccess(null);
 
             const updatedMedia = data.media
                 .filter(m => m.url.trim() !== "") // Filtrer ut tomme linjer
@@ -61,16 +60,21 @@ export default function VenueForm({ venue }) {
 
             if (isEditing) {
                 const response = await updateVenue(venue.id, venueData, token);
-                setSuccess("Venue updated successfully! Redirecting...");
-                setTimeout(() => navigate(`/venue/${response.data.id}`), 2000);
+                toast.success("Venue updated successfully!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    onClose: () => navigate(`/venue/${response.data.id}`),
+                });
             } else {
                 const response = await createVenue(venueData, token);
-                setSuccess("Venue created successfully! Redirecting...");
-                setTimeout(() => navigate(`/venue/${response.data.id}`), 2000);
+                toast.success("Venue updated successfully!", {
+                    position: "top-center",
+                    autoClose: 1000,
+                    onClose: () => navigate(`/venue/${response.data.id}`),
+                });
             }
         } catch (err) {
-            console.error("API error:", err);
-            setError(err.message || "Something went wrong.");
+            setError(err.message || "Something went wrong. Please try again.");
         }
     };
 
@@ -82,8 +86,7 @@ export default function VenueForm({ venue }) {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto p-6 rounded-lg border border-bg-primary">
             <h2 className="text-center text-xl font-normal mb-4">{isEditing ? "Edit your venue" : "Add new Venue"}</h2>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
+            
 
             {/* Title */}
             <div className="mb-2.5">
@@ -183,6 +186,7 @@ export default function VenueForm({ venue }) {
             <button type="submit" className="w-full my-4 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                 {isEditing ? "Update Venue" : "Add Venue"}
             </button>
+            {error && <p className="text-red-500">{error}</p>}
         </form>
     );
 }

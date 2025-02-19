@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteVenue } from "../api";
 import useAuthStore from "../store/authStore";
+import { toast } from "react-toastify";
 
 export default function useVenueActions(venueId) {
     const { token } = useAuthStore();
@@ -15,8 +16,11 @@ export default function useVenueActions(venueId) {
         setIsDeleting(true);
         try {
             await deleteVenue(venueId, token);
-            alert("Venue deleted successfully!");
-            navigate("/profile"); // Send brukeren tilbake til profilen
+            toast.success("Venue deleted successfully!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate("/profile"),
+            });
         } catch (error) {
             console.error("Error deleting venue:", error.message);
             alert("Failed to delete venue.");

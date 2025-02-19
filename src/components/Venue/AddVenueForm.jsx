@@ -7,11 +7,11 @@ import useAuthStore from "../../store/authStore";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdClose } from "react-icons/md"; // Fjern-ikon
 import { useNavigate } from "react-router-dom"; // Importer navigasjon
+import { toast } from "react-toastify";
 
 export default function AddVenueForm() {
     const { token } = useAuthStore();
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
     const navigate = useNavigate();
 
     const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useForm({
@@ -31,7 +31,6 @@ export default function AddVenueForm() {
     const onSubmit = async (data) => {
         try {
             setError(null);
-            setSuccess(null);
 
             // Automatisk legge til alt-tekst + filtrere ut tomme bildelinjer
             const updatedMedia = data.media
@@ -41,15 +40,13 @@ export default function AddVenueForm() {
             const venueData = { ...data, media: updatedMedia };
 
             const response = await createVenue(venueData, token);
-
-            setSuccess("Venue created successfully! Redirecting...");
-            
-            setTimeout(() => {
-                navigate(`/venue/${response.data.id}`); // Naviger til den nye venue-siden
-            }, 2000);
+            toast.success("Venue updated successfully!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => navigate(`/venue/${response.data.id}`),
+            });
         } catch (err) {
-            console.error("API error:", err);
-            setError(err.message || "Failed to create venue.");
+            setError(err.message || "Failed to create venue. Please try again later.");
         }
     };
 
@@ -62,9 +59,7 @@ export default function AddVenueForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto p-6 rounded-lg border border-bg-primary">
             <h2 className="text-center text-xl font-normal mb-4">Add new venue</h2>
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
-
+            
             {/* Title */}
             <div className="mb-2.5">
                 <label className="block">Title</label>
@@ -167,6 +162,7 @@ export default function AddVenueForm() {
             <button type="submit" className="w-full my-4 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
                 Add venue
             </button>
+            {error && <p className="text-red-500">{error}</p>}
         </form>
     );
 }
