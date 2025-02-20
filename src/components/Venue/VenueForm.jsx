@@ -67,7 +67,7 @@ export default function VenueForm({ venue }) {
                 });
             } else {
                 const response = await createVenue(venueData, token);
-                toast.success("Venue updated successfully!", {
+                toast.success("Venue created successfully!", {
                     position: "top-center",
                     autoClose: 1000,
                     onClose: () => navigate(`/venue/${response.data.id}`),
@@ -90,16 +90,16 @@ export default function VenueForm({ venue }) {
 
             {/* Title */}
             <div className="mb-2.5">
-                <label className="block">Title</label>
-                <input {...register("name")} placeholder="Venue title" className={inputClass} />
-                <p className="text-red-500">{errors.name?.message}</p>
+                <label htmlFor="venue-name" className="block">Title</label>
+                <input {...register("name")} id="venue-name" placeholder="Enter venue title" className={inputClass} aria-label="Venue title" aria-describedby="name-error"/>
+                <p id="name-error" className="text-red-500">{errors.name?.message}</p>
             </div>
 
             {/* Description */}
             <div className="mb-2.5">
-                <label className="block">Description</label>
-                <textarea {...register("description")} placeholder="Describe your venue" className={inputClass} />
-                <p className="text-red-500">{errors.description?.message}</p>
+                <label htmlFor="venue-description" className="block">Description</label>
+                <textarea {...register("description")} id="venue-description" placeholder="Describe your venue" className={inputClass} aria-label="Venue description" aria-describedby="description-error"/>
+                <p id="description-error" className="text-red-500">{errors.description?.message}</p>
             </div>
 
             {/* Media URLs */}
@@ -115,7 +115,7 @@ export default function VenueForm({ venue }) {
                         )}
                     </div>
                 ))}
-                <button type="button" className="flex items-center space-x-1 hover:scale-105" onClick={() => setValue("media", [...media, { url: "" }])}>
+                <button type="button" className="flex items-center space-x-1 hover:scale-105" onClick={() => setValue("media", [...media, { url: "" }])} aria-label="Add another image">
                     <CiCirclePlus className="w-10 h-10 text-bg-highlight" />
                     <span className="text-sm text-gray-500">Add more</span>
                 </button>
@@ -124,15 +124,16 @@ export default function VenueForm({ venue }) {
             {/* Price & Max Guests */}
             <div className="flex space-x-2 mb-2.5">
                 <div>
-                    <label>Price/night</label>
-                    <input {...register("price")} placeholder="Enter amount" className={inputClass} />
+                    <label htmlFor="venue-price">Price/night</label>
+                    <input {...register("price")} id="venue-price" placeholder="Enter price in NOK" className={inputClass} aria-label="Venue price" aria-describedby="price-error"/>
                 </div>
                 <div>
-                    <label>Max guests</label>
-                    <input {...register("maxGuests")} placeholder="Enter number" className={inputClass} />
+                    <label htmlFor="venue-max-guests">Maximum guests</label>
+                    <input {...register("maxGuests")} id="venue-max-guests" placeholder="Enter maximum guests" className={inputClass} aria-label="Maximum number of guests" aria-describedby="maxGuests-error"/>
                 </div>
             </div>
-            <p className="text-red-500">{errors.price?.message || errors.maxGuests?.message}</p>
+            <p id="price-error" className="text-red-500">{errors.price?.message}</p>
+            <p id="maxGuests-error" className="text-red-500">{errors.maxGuests?.message}</p>
 
             {/* Amenities */}
             <div className="mb-2.5">
@@ -140,7 +141,7 @@ export default function VenueForm({ venue }) {
                 <div className="flex flex-wrap space-x-2.5">
                     {["breakfast", "parking", "wifi", "pets"].map((amenity) => (
                         <label key={amenity} className="flex items-center space-x-1">
-                            <Controller control={control} name={`meta.${amenity}`} render={({ field }) => <input type="checkbox" {...field} checked={field.value} />} />
+                            <Controller control={control} name={`meta.${amenity}`} render={({ field }) => <input type="checkbox" {...field} checked={field.value} aria-label={`Include ${amenity}`}/>} />
                             <span>{amenity.charAt(0).toUpperCase() + amenity.slice(1)}</span>
                         </label>
                     ))}
@@ -157,6 +158,7 @@ export default function VenueForm({ venue }) {
                             className={index < rating ? "text-bg-highlight cursor-pointer" : "text-gray-300 cursor-pointer"}
                             onClick={() => handleRatingClick(index)}
                             size={24}
+                            aria-label={`Rate venue ${index + 1} out of 5`}
                         />
                     ))}
                 </div>
@@ -164,23 +166,23 @@ export default function VenueForm({ venue }) {
 
             {/* Location */}
             <div className="mb-2.5">
-                <label>Address</label>
-                <input {...register("location.address")} placeholder="Venuestreet 1" className={inputClass} />
+                <label htmlFor="venue-address">Address</label>
+                <input {...register("location.address")} id="venue-address" placeholder="Enter street address" className={inputClass} aria-label="Venue address"/>
             </div>
             
             <div className="flex space-x-2 mb-2.5">
                 <div>
-                    <label>City</label>
-                    <input {...register("location.city")} placeholder="Venuecity" className={inputClass} />
+                    <label htmlFor="venue-city">City</label>
+                    <input {...register("location.city")} id="venue-city" placeholder="Enter city" className={inputClass} aria-label="Venue city"/>
                 </div>
                 <div>
-                    <label>Zip code</label>
-                    <input {...register("location.zip")} placeholder="0000" className={inputClass} />
+                    <label htmlFor="venue-zip">Zip code</label>
+                    <input {...register("location.zip")} id="venue-zip" placeholder="Enter zip code" className={inputClass} aria-label="Venue zip code"/>
                 </div>
             </div>
             <div>
-                <label>Country</label>
-                <input {...register("location.country")} placeholder="Country" className={inputClass} />
+                <label htmlFor="venue-country">Country</label>
+                <input {...register("location.country")} id="venue-country" placeholder="Country" className={inputClass} aria-label="Venue country"/>
             </div>
 
             <button type="submit" className="w-full my-4 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
