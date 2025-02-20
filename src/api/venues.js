@@ -95,9 +95,7 @@ export async function updateVenue(venueId, updatedData, token) {
 
 // fetch venue id
 export async function fetchVenue(venueId) {
-  try {
     const url = `${API_HOLIDAZE_URL}/venues/${venueId}?_owner=true&_bookings=true`;
-    console.log(`Fetching venue with bookings from: ${url}`);
 
     const response = await fetch(url, {
       method: 'GET',
@@ -111,9 +109,5 @@ export async function fetchVenue(venueId) {
       throw new Error(`Failed to fetch venue: ${response.status}`);
     }
 
-    const venueData = await response.json();
-    return venueData;
-  } catch (error) {
-    throw error;
-  }
+    return await response.json();
 }
