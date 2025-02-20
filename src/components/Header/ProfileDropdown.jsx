@@ -24,7 +24,7 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, l
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center space-x-2 bg-transparent py-2 rounded-md hover:text-bg-highlight transition"
+                className="flex items-center space-x-2 bg-transparent py-2 rounded-md hover:scale-105 transition-transform duration-300 hover:text-bg-highlight"
             >
                 <p>Profile</p>
                 <img
@@ -36,7 +36,7 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, l
 
             {/* Dropdown Menu */}
             <div
-                className={`absolute right-0 mt-2 w-48 bg-white text-gray-700 shadow-lg rounded-md z-50 overflow-hidden transition-transform transform ${
+                className={`absolute right-0 mt-2 w-48 bg-white text-black border shadow-lg rounded-md z-50 overflow-hidden transition-transform transform ${
                     dropdownOpen ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0"
                 } origin-top`}
             >
@@ -57,7 +57,7 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, l
                         Add Venue
                     </Link>
                 )}
-
+                <div className="border-t border-gray-300"></div>
                 <button
                     onClick={() => {
                         logoutUser();

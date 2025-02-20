@@ -3,7 +3,7 @@ import { API_HOLIDAZE_URL, API_KEY } from "./constants";
 // GET bookings for Travelers
 export async function fetchUserBookings(username, token) {
     try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/profiles/${username}/bookings`, {
+        const response = await fetch(`${API_HOLIDAZE_URL}/profiles/${username}/bookings?_venue=true`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

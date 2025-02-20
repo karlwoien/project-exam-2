@@ -1,11 +1,12 @@
-export default function InputField({ label, type = "text", error, register }) {
+export default function InputField({ label, type = "text", placeholder, error, register }) {
     return (
         <div className="mb-4">
             <label className="block mb-1">{label}</label>
             <input 
-                type={type} 
+                type={type}
+                placeholder={placeholder} 
                 {...register} 
-                className="w-full p-2 border rounded"
+                className="py-1 px-2.5 border border-bg-primary w-full rounded-md"
             />
             {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>

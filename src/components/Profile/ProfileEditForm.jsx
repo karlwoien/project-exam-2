@@ -3,6 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { updateProfileSchema } from "../../forms/validation/userSchema";
 import { updateUserProfile } from "../../api"; 
 import useAuthStore from "../../store/authStore";
+import { toast } from "react-toastify";
 
 export default function ProfileEditForm({ profile, onClose }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -26,16 +27,24 @@ export default function ProfileEditForm({ profile, onClose }) {
     
             const updatedProfile = await updateUserProfile(user.name, updatedData, token);
             updateProfile(updatedProfile.data);
-            alert("Profile updated successfully!");
-            onClose();
-        } catch (err) {
-            console.error("Error updating profile:", err.message);
+            toast.success("Update successful!", {
+                position: "top-center",
+                autoClose: 1000,
+                onClose: () => {
+                onClose();
+            },
+            });
+        } catch (error) {
+            toast.error ("Update failed. Please try again later!", {
+                position: "top-center",
+                autoClose: 1000,
+            });
         }
     };
 
     return (
         <div className="p-6">
-            <h2 className="text-lg font-bold mb-4">Edit Profile</h2>
+            <h2 className="text-lg mb-4">Edit Profile</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <label className="block mb-2">Bio</label>
                 <textarea {...register("bio")} className="w-full p-2 border rounded-md" />
@@ -50,8 +59,8 @@ export default function ProfileEditForm({ profile, onClose }) {
                 <p className="text-red-500">{errors.bannerUrl?.message}</p>
 
                 <div className="flex justify-between mt-4">
-                    <button type="submit" className="bg-bg-primary text-white px-4 py-2 rounded-md hover:bg-bg-highlight">Save</button>
-                    <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded-md">Cancel</button>
+                    <button type="submit" className="bg-bg-primary text-white px-4 py-2 rounded-full hover:bg-bg-highlight">Save</button>
+                    <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded-full hover:bg-gray-500">Cancel</button>
                 </div>
             </form>
         </div>

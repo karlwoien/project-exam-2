@@ -29,3 +29,46 @@ p {
 .logo {
   @apply font-logo;
 }
+
+/*React-datepicker custom styling*/
+.react-datepicker {
+  border: none !important;
+  border-radius: 12px !important; /* Runde kanter */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important; /* Myk skygge */
+  padding: 8px;
+  width: 350px !important; /* Øker bredden */
+  font-size: 16px !important;
+}
+
+.react-datepicker__header {
+  background-color: white !important; /* Hvit bakgrunn på toppen (måned/år) */
+  border-bottom: none !important;
+  width: 100% !important;
+}
+
+.react-datepicker__navigation {
+  top: 12px !important; /* Plasser pilene riktig */
+  width: 40px !important; /* Gjør pilene større for bedre UX */
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-datepicker__current-month {
+  margin-bottom: 20px !important;
+}
+
+.booked-dates {
+  color: #dc2626 !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name {
+  width: 40px !important; /* Gjør dagene større */
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

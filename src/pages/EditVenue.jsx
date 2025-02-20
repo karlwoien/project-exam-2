@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchVenue } from "../api";
 import VenueForm from "../components/Venue/VenueForm";
+import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function EditVenue() {
     const { id } = useParams();
@@ -11,9 +13,11 @@ export default function EditVenue() {
         fetchVenue(id).then(response => setVenue(response.data));
     }, [id]);
 
+    useTitle("Edit venue")
+
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
-            {venue ? <VenueForm venue={venue} /> : <p className="text-center text-gray-500">Loading...</p>}
+        <div className="max-w-5xl mx-auto">
+            {venue ? <VenueForm venue={venue} /> : <LoadingSpinner />}
         </div>
     );
 }

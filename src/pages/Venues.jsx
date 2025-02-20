@@ -1,17 +1,20 @@
 import React from "react";
 import VenueCard from "../components/VenueCard";
-import Search from "../components/SearchVenues";
+import Search from "../components/SearchVenues/VenueSearch";
 import useVenues from "../hooks/useVenues";
+import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function Venues() {
-    const { venues, isLoading, error, fetchVenues } = useVenues(); // Bruk hooken
+    useTitle("Venues")
+    const { venues, isLoading, error, fetchVenues } = useVenues();
 
     const handleSearch = (query) => {
       fetchVenues(query.trim() || ""); // Bruk query eller hent alle venues
     };
 
     if (isLoading) {
-        return <p className="pt-20">Loading venues...</p>;
+        return <LoadingSpinner />;
     }
 
     if (error) {
@@ -19,7 +22,7 @@ export default function Venues() {
     }
 
     return (
-        <div className="max-w-5xl mx-auto px-6 py-16 mt-16">
+        <div className="max-w-5xl mx-auto">
             <h1 className="text-bg-highlight text-4xl mb-5">EXPLORE VENUES</h1>
             {/* Search input and filter option */}
             <div className="w-full">
