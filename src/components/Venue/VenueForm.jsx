@@ -1,194 +1,298 @@
-import { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import venueSchema from "../../forms/validation/venueSchema";
-import { createVenue, updateVenue } from "../../api/venues";
-import useAuthStore from "../../store/authStore";
-import { CiCirclePlus } from "react-icons/ci";
-import { MdClose, MdStar } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useState, useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import venueSchema from '../../forms/validation/venueSchema';
+import { createVenue, updateVenue } from '../../api/venues';
+import useAuthStore from '../../store/authStore';
+import { CiCirclePlus } from 'react-icons/ci';
+import { MdClose, MdStar } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function VenueForm({ venue }) {
-    const { token } = useAuthStore();
-    const navigate = useNavigate();
-    const [error, setError] = useState(null);
-    const isEditing = !!venue;
+  const { token } = useAuthStore();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const isEditing = !!venue;
 
-    // Hook Form setup
-    const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useForm({
-        resolver: yupResolver(venueSchema),
-        defaultValues: venue || { 
-            name: "", 
-            description: "", 
-            media: [{ url: "" }],
-            price: "",
-            maxGuests: "",
-            rating: 0,
-            meta: { wifi: false, parking: false, breakfast: false, pets: false },
-            location: { address: "", city: "", zip: "", country: "" }
-        },
-    });
+  // Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(venueSchema),
+    defaultValues: venue || {
+      name: '',
+      description: '',
+      media: [{ url: '' }],
+      price: '',
+      maxGuests: '',
+      rating: 0,
+      meta: { wifi: false, parking: false, breakfast: false, pets: false },
+      location: { address: '', city: '', zip: '', country: '' },
+    },
+  });
 
-    const media = watch("media");
-    const rating = watch ("rating")
+  const media = watch('media');
+  const rating = watch('rating');
 
-    // Funksjon for å sette rating
-    const handleRatingClick = (index) => {
-        setValue("rating", index + 1);
-    };
+  // Funksjon for å sette rating
+  const handleRatingClick = (index) => {
+    setValue('rating', index + 1);
+  };
 
-    useEffect(() => {
-        if (venue) {
-            Object.keys(venue).forEach(key => {
-                setValue(key, venue[key]);
-            });
-        }
-    }, [venue, setValue]);
+  useEffect(() => {
+    if (venue) {
+      Object.keys(venue).forEach((key) => {
+        setValue(key, venue[key]);
+      });
+    }
+  }, [venue, setValue]);
 
-    const inputClass = "py-1 px-2.5 border border-bg-primary w-full rounded-md";
+  const inputClass = 'py-1 px-2.5 border border-bg-primary w-full rounded-md';
 
-    const onSubmit = async (data) => {
-        try {
-            setError(null);
+  const onSubmit = async (data) => {
+    try {
+      setError(null);
 
-            const updatedMedia = data.media
-                .filter(m => m.url.trim() !== "") // Filtrer ut tomme linjer
-                .map(m => ({ url: m.url, alt: `Image of ${data.name || "Venue"}` }));
+      const updatedMedia = data.media
+        .filter((m) => m.url.trim() !== '') // Filtrer ut tomme linjer
+        .map((m) => ({ url: m.url, alt: `Image of ${data.name || 'Venue'}` }));
 
-            const venueData = { ...data, media: updatedMedia };
+      const venueData = { ...data, media: updatedMedia };
 
-            if (isEditing) {
-                const response = await updateVenue(venue.id, venueData, token);
-                toast.success("Venue updated successfully!", {
-                    position: "top-center",
-                    autoClose: 1000,
-                    onClose: () => navigate(`/venue/${response.data.id}`),
-                });
-            } else {
-                const response = await createVenue(venueData, token);
-                toast.success("Venue created successfully!", {
-                    position: "top-center",
-                    autoClose: 1000,
-                    onClose: () => navigate(`/venue/${response.data.id}`),
-                });
-            }
-        } catch (err) {
-            setError(err.message || "Something went wrong. Please try again.");
-        }
-    };
+      if (isEditing) {
+        const response = await updateVenue(venue.id, venueData, token);
+        toast.success('Venue updated successfully!', {
+          position: 'top-center',
+          autoClose: 1000,
+          onClose: () => navigate(`/venue/${response.data.id}`),
+        });
+      } else {
+        const response = await createVenue(venueData, token);
+        toast.success('Venue created successfully!', {
+          position: 'top-center',
+          autoClose: 1000,
+          onClose: () => navigate(`/venue/${response.data.id}`),
+        });
+      }
+    } catch (err) {
+      setError(err.message || 'Something went wrong. Please try again.');
+    }
+  };
 
-    const removeMediaInput = (index) => {
-        const updatedMedia = media.filter((_, i) => i !== index);
-        setValue("media", updatedMedia);
-    };
+  const removeMediaInput = (index) => {
+    const updatedMedia = media.filter((_, i) => i !== index);
+    setValue('media', updatedMedia);
+  };
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto p-6 rounded-lg border border-bg-primary">
-            <h2 className="text-center text-xl font-normal mb-4">{isEditing ? "Edit your venue" : "Add new Venue"}</h2>
-            
+  return (
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="mx-auto max-w-lg rounded-lg border border-bg-primary p-6"
+    >
+      <h2 className="mb-4 text-center text-xl font-normal">
+        {isEditing ? 'Edit your venue' : 'Add new Venue'}
+      </h2>
 
-            {/* Title */}
-            <div className="mb-2.5">
-                <label htmlFor="venue-name" className="block">Title</label>
-                <input {...register("name")} id="venue-name" placeholder="Enter venue title" className={inputClass} aria-label="Venue title" aria-describedby="name-error"/>
-                <p id="name-error" className="text-red-500">{errors.name?.message}</p>
-            </div>
+      {/* Title */}
+      <div className="mb-2.5">
+        <label htmlFor="venue-name" className="block">
+          Title
+        </label>
+        <input
+          {...register('name')}
+          id="venue-name"
+          placeholder="Enter venue title"
+          className={inputClass}
+          aria-label="Venue title"
+          aria-describedby="name-error"
+        />
+        <p id="name-error" className="text-red-500">
+          {errors.name?.message}
+        </p>
+      </div>
 
-            {/* Description */}
-            <div className="mb-2.5">
-                <label htmlFor="venue-description" className="block">Description</label>
-                <textarea {...register("description")} id="venue-description" placeholder="Describe your venue" className={inputClass} aria-label="Venue description" aria-describedby="description-error"/>
-                <p id="description-error" className="text-red-500">{errors.description?.message}</p>
-            </div>
+      {/* Description */}
+      <div className="mb-2.5">
+        <label htmlFor="venue-description" className="block">
+          Description
+        </label>
+        <textarea
+          {...register('description')}
+          id="venue-description"
+          placeholder="Describe your venue"
+          className={inputClass}
+          aria-label="Venue description"
+          aria-describedby="description-error"
+        />
+        <p id="description-error" className="text-red-500">
+          {errors.description?.message}
+        </p>
+      </div>
 
-            {/* Media URLs */}
-            <div className="mb-2.5">
-                <label>Images</label>
-                {media.map((_, index) => (
-                    <div key={index} className="flex space-x-2 mb-2 items-center">
-                        <input {...register(`media.${index}.url`)} placeholder="Media URL" className={inputClass} />
-                        {media.length > 1 && (
-                            <button type="button" className="text-red-500 hover:text-red-700" onClick={() => removeMediaInput(index)}>
-                                <MdClose size={24} />
-                            </button>
-                        )}
-                    </div>
-                ))}
-                <button type="button" className="flex items-center space-x-1 hover:scale-105" onClick={() => setValue("media", [...media, { url: "" }])} aria-label="Add another image">
-                    <CiCirclePlus className="w-10 h-10 text-bg-highlight" />
-                    <span className="text-sm text-gray-500">Add more</span>
-                </button>
-            </div>
+      {/* Media URLs */}
+      <div className="mb-2.5">
+        <label>Images</label>
+        {media.map((_, index) => (
+          <div key={index} className="mb-2 flex items-center space-x-2">
+            <input
+              {...register(`media.${index}.url`)}
+              placeholder="Media URL"
+              className={inputClass}
+            />
+            {media.length > 1 && (
+              <button
+                type="button"
+                className="text-red-500 hover:text-red-700"
+                onClick={() => removeMediaInput(index)}
+              >
+                <MdClose size={24} />
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          className="flex items-center space-x-1 hover:scale-105"
+          onClick={() => setValue('media', [...media, { url: '' }])}
+          aria-label="Add another image"
+        >
+          <CiCirclePlus className="h-10 w-10 text-bg-highlight" />
+          <span className="text-sm text-gray-500">Add more</span>
+        </button>
+      </div>
 
-            {/* Price & Max Guests */}
-            <div className="flex space-x-2 mb-2.5">
-                <div>
-                    <label htmlFor="venue-price">Price/night</label>
-                    <input {...register("price")} id="venue-price" placeholder="Enter price in NOK" className={inputClass} aria-label="Venue price" aria-describedby="price-error"/>
-                </div>
-                <div>
-                    <label htmlFor="venue-max-guests">Maximum guests</label>
-                    <input {...register("maxGuests")} id="venue-max-guests" placeholder="Enter maximum guests" className={inputClass} aria-label="Maximum number of guests" aria-describedby="maxGuests-error"/>
-                </div>
-            </div>
-            <p id="price-error" className="text-red-500">{errors.price?.message}</p>
-            <p id="maxGuests-error" className="text-red-500">{errors.maxGuests?.message}</p>
+      {/* Price & Max Guests */}
+      <div className="mb-2.5 flex space-x-2">
+        <div>
+          <label htmlFor="venue-price">Price/night</label>
+          <input
+            {...register('price')}
+            id="venue-price"
+            placeholder="Enter price in NOK"
+            className={inputClass}
+            aria-label="Venue price"
+            aria-describedby="price-error"
+          />
+        </div>
+        <div>
+          <label htmlFor="venue-max-guests">Maximum guests</label>
+          <input
+            {...register('maxGuests')}
+            id="venue-max-guests"
+            placeholder="Enter maximum guests"
+            className={inputClass}
+            aria-label="Maximum number of guests"
+            aria-describedby="maxGuests-error"
+          />
+        </div>
+      </div>
+      <p id="price-error" className="text-red-500">
+        {errors.price?.message}
+      </p>
+      <p id="maxGuests-error" className="text-red-500">
+        {errors.maxGuests?.message}
+      </p>
 
-            {/* Amenities */}
-            <div className="mb-2.5">
-                <label>Amenities</label>
-                <div className="flex flex-wrap space-x-2.5">
-                    {["breakfast", "parking", "wifi", "pets"].map((amenity) => (
-                        <label key={amenity} className="flex items-center space-x-1">
-                            <Controller control={control} name={`meta.${amenity}`} render={({ field }) => <input type="checkbox" {...field} checked={field.value} aria-label={`Include ${amenity}`}/>} />
-                            <span>{amenity.charAt(0).toUpperCase() + amenity.slice(1)}</span>
-                        </label>
-                    ))}
-                </div>
-            </div>
+      {/* Amenities */}
+      <div className="mb-2.5">
+        <label>Amenities</label>
+        <div className="flex flex-wrap space-x-2.5">
+          {['breakfast', 'parking', 'wifi', 'pets'].map((amenity) => (
+            <label key={amenity} className="flex items-center space-x-1">
+              <Controller
+                control={control}
+                name={`meta.${amenity}`}
+                render={({ field }) => (
+                  <input
+                    type="checkbox"
+                    {...field}
+                    checked={field.value}
+                    aria-label={`Include ${amenity}`}
+                  />
+                )}
+              />
+              <span>{amenity.charAt(0).toUpperCase() + amenity.slice(1)}</span>
+            </label>
+          ))}
+        </div>
+      </div>
 
-            {/* Rating Section */}
-            <div className="mb-2.5">
-                <label className="block">Rating</label>
-                <div className="flex items-center space-x-1">
-                    {Array.from({ length: 5 }, (_, index) => (
-                        <MdStar
-                            key={index}
-                            className={index < rating ? "text-bg-highlight cursor-pointer" : "text-gray-300 cursor-pointer"}
-                            onClick={() => handleRatingClick(index)}
-                            size={24}
-                            aria-label={`Rate venue ${index + 1} out of 5`}
-                        />
-                    ))}
-                </div>
-            </div>
+      {/* Rating Section */}
+      <div className="mb-2.5">
+        <label className="block">Rating</label>
+        <div className="flex items-center space-x-1">
+          {Array.from({ length: 5 }, (_, index) => (
+            <MdStar
+              key={index}
+              className={
+                index < rating ? 'cursor-pointer text-bg-highlight' : 'cursor-pointer text-gray-300'
+              }
+              onClick={() => handleRatingClick(index)}
+              size={24}
+              aria-label={`Rate venue ${index + 1} out of 5`}
+            />
+          ))}
+        </div>
+      </div>
 
-            {/* Location */}
-            <div className="mb-2.5">
-                <label htmlFor="venue-address">Address</label>
-                <input {...register("location.address")} id="venue-address" placeholder="Enter street address" className={inputClass} aria-label="Venue address"/>
-            </div>
-            
-            <div className="flex space-x-2 mb-2.5">
-                <div>
-                    <label htmlFor="venue-city">City</label>
-                    <input {...register("location.city")} id="venue-city" placeholder="Enter city" className={inputClass} aria-label="Venue city"/>
-                </div>
-                <div>
-                    <label htmlFor="venue-zip">Zip code</label>
-                    <input {...register("location.zip")} id="venue-zip" placeholder="Enter zip code" className={inputClass} aria-label="Venue zip code"/>
-                </div>
-            </div>
-            <div>
-                <label htmlFor="venue-country">Country</label>
-                <input {...register("location.country")} id="venue-country" placeholder="Country" className={inputClass} aria-label="Venue country"/>
-            </div>
+      {/* Location */}
+      <div className="mb-2.5">
+        <label htmlFor="venue-address">Address</label>
+        <input
+          {...register('location.address')}
+          id="venue-address"
+          placeholder="Enter street address"
+          className={inputClass}
+          aria-label="Venue address"
+        />
+      </div>
 
-            <button type="submit" className="w-full my-4 bg-bg-primary text-white py-2 rounded-full hover:bg-bg-highlight">
-                {isEditing ? "Update Venue" : "Add Venue"}
-            </button>
-            {error && <p className="text-red-500">{error}</p>}
-        </form>
-    );
+      <div className="mb-2.5 flex space-x-2">
+        <div>
+          <label htmlFor="venue-city">City</label>
+          <input
+            {...register('location.city')}
+            id="venue-city"
+            placeholder="Enter city"
+            className={inputClass}
+            aria-label="Venue city"
+          />
+        </div>
+        <div>
+          <label htmlFor="venue-zip">Zip code</label>
+          <input
+            {...register('location.zip')}
+            id="venue-zip"
+            placeholder="Enter zip code"
+            className={inputClass}
+            aria-label="Venue zip code"
+          />
+        </div>
+      </div>
+      <div>
+        <label htmlFor="venue-country">Country</label>
+        <input
+          {...register('location.country')}
+          id="venue-country"
+          placeholder="Country"
+          className={inputClass}
+          aria-label="Venue country"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="my-4 w-full rounded-full bg-bg-primary py-2 text-white hover:bg-bg-highlight"
+      >
+        {isEditing ? 'Update Venue' : 'Add Venue'}
+      </button>
+      {error && <p className="text-red-500">{error}</p>}
+    </form>
+  );
 }

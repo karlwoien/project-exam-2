@@ -18,12 +18,16 @@ body {
   @apply font-body font-light;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   @apply font-heading font-semibold;
 }
 
 p {
-  @apply text-lg font-body;
+  @apply font-body text-lg;
 }
 
 .logo {

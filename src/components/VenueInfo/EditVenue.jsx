@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function EditVenue({ venueId }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <button 
-            onClick={() => navigate(`/venue/${venueId}/edit`)}
-            className="px-4 py-2 bg-bg-primary text-white rounded-full hover:bg-bg-highlight transition"
-        >
-            Update
-        </button>
-    );
+  return (
+    <button
+      onClick={() => navigate(`/venue/${venueId}/edit`)}
+      className="rounded-full bg-bg-primary px-4 py-2 text-white transition hover:bg-bg-highlight"
+    >
+      Update
+    </button>
+  );
 }

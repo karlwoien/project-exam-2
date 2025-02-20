@@ -1,23 +1,23 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchVenue } from "../api";
-import VenueForm from "../components/Venue/VenueForm";
-import { useTitle } from "../hooks/useTitle";
-import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { fetchVenue } from '../api';
+import VenueForm from '../components/Venue/VenueForm';
+import { useTitle } from '../hooks/useTitle';
+import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
 export default function EditVenue() {
-    const { id } = useParams();
-    const [venue, setVenue] = useState(null);
+  const { id } = useParams();
+  const [venue, setVenue] = useState(null);
 
-    useEffect(() => {
-        fetchVenue(id).then(response => setVenue(response.data));
-    }, [id]);
+  useEffect(() => {
+    fetchVenue(id).then((response) => setVenue(response.data));
+  }, [id]);
 
-    useTitle("Edit venue")
+  useTitle('Edit venue');
 
-    return (
-        <div className="max-w-5xl mx-auto">
-            {venue ? <VenueForm venue={venue} /> : <LoadingSpinner />}
-        </div>
-    );
+  return (
+    <div className="mx-auto max-w-5xl">
+      {venue ? <VenueForm venue={venue} /> : <LoadingSpinner />}
+    </div>
+  );
 }

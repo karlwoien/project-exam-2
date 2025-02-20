@@ -1,8 +1,6 @@
-import { useTitle } from "../hooks/useTitle";
+import { useTitle } from '../hooks/useTitle';
 
 export default function Error() {
-    useTitle("404")
-    return (
-    <p>Error</p>
-    );
-  };
+  useTitle('404');
+  return <p>Error</p>;
+}
