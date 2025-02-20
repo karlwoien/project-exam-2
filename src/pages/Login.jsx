@@ -90,7 +90,7 @@ export default function Login() {
 
         {/* Register Link */}
         <div className="mb-6 mt-3 flex justify-center space-x-2">
-          <p className="text-sm">Don't have an account?</p>
+          <p className="text-sm">Don&apos;t have an account?</p>
           <Link to="/register" className="text-sm text-bg-primary hover:underline">
             Register here
           </Link>

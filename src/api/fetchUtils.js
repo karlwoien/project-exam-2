@@ -1,5 +1,4 @@
-import { API_HOLIDAZE_URL, API_BASE_URL, API_KEY } from './constants';
-import useAuthStore from '../store/authStore';
+import { API_HOLIDAZE_URL, API_KEY } from './constants';
 
 // Generisk GET-funksjon for å hente data fra API-et
 export async function fetchData(endpoint, params = {}) {

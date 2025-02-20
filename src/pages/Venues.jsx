@@ -1,4 +1,3 @@
-import React from 'react';
 import VenueCard from '../components/VenueCard';
 import Search from '../components/SearchVenues/VenueSearch';
 import useVenues from '../hooks/useVenues';

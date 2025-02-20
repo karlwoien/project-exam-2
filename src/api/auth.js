@@ -1,4 +1,4 @@
-import { API_HOLIDAZE_URL, API_BASE_URL, API_KEY } from './constants';
+import { API_BASE_URL, API_KEY } from './constants';
 import useAuthStore from '../store/authStore';
 
 //REGISTER USER

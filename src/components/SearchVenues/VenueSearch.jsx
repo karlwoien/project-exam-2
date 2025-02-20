@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Search({ onSearch }) {
   const handleInputChange = (event) => {
     const value = event.target.value.trim();

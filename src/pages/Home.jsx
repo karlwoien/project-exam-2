@@ -1,4 +1,3 @@
-import React from 'react';
 import LinkButton from '../components/Button/LinkButton';
 import { CiGlobe, CiCalendar, CiAirportSign1 } from 'react-icons/ci';
 import LookaheadSearch from '../components/SearchVenues/LookaheadSearch';

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function LookaheadSearch() {
   const [query, setQuery] = useState('');
-  const { searchResults, isSearching, debouncedFetchSearchResults } = useLookaheadSearch();
+  const { searchResults, debouncedFetchSearchResults } = useLookaheadSearch();
   const navigate = useNavigate();
 
   const handleInputChange = (event) => {
