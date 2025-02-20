@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative w-full min-h-screen bg-black bg-cover bg-center flex justify-center pt-40">
+      <section className="relative w-full min-h-screen bg-black bg-cover bg-center flex justify-center pt-32">
         {/* Bakgrunnsbilde + Overlay */}
         <div className="absolute inset-0 w-full h-full bg-cover bg-center z-0" 
             style={{ backgroundImage: "url('/src/assets/hero-image.jpg')" }}>
