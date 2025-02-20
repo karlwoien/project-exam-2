@@ -4,23 +4,32 @@ import ProfileBookings from "../components/Profile/ProfileBookings";
 import ProfileVenues from "../components/Profile/ProfileVenues";
 import ProfileCard from "../components/Profile/ProfileCard";
 import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function Profile() {
-    const { logout, user } = useAuthStore();
-    const { profile, venues, bookings, error } = useProfile();
-
-    if (!user) return <p className="text-center text-red-500">You must be logged in to view this page.</p>;
-    if (error) return <p className="text-red-500">Error: {error}</p>;
+    const { user } = useAuthStore();
+    const { profile, venues, bookings, isLoading } = useProfile();
 
     useTitle(user ? user.name : "Loading...");
+
+    // **Vis en loading-spinner hvis dataene ikke er lastet inn enda**
+    if (isLoading || !profile) {
+        return ( 
+            <LoadingSpinner />
+        );
+    }
 
     return (
         <div className="max-w-5xl mx-auto">
             {/* Profile Info */}
-            {profile && <ProfileCard profile={profile} />}
+            <ProfileCard profile={profile} />
 
-            {/* Conditional Display */}
-            {user.venueManager ? <ProfileVenues venues={venues} /> : <ProfileBookings bookings={bookings} />}
+            {/* Conditional Display - **Sjekk at bookings eller venues finnes før vi viser dem** */}
+            {user.venueManager && venues ? (
+                <ProfileVenues venues={venues} />
+            ) : bookings ? (
+                <ProfileBookings bookings={bookings} />
+            ) : null} 
         </div>
     );
 }

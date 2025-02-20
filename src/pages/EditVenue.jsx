@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { fetchVenue } from "../api";
 import VenueForm from "../components/Venue/VenueForm";
 import { useTitle } from "../hooks/useTitle";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function EditVenue() {
     const { id } = useParams();
@@ -16,7 +17,7 @@ export default function EditVenue() {
 
     return (
         <div className="max-w-5xl mx-auto">
-            {venue ? <VenueForm venue={venue} /> : <p className="text-center text-gray-500">Loading...</p>}
+            {venue ? <VenueForm venue={venue} /> : <LoadingSpinner />}
         </div>
     );
 }
