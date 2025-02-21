@@ -3,15 +3,19 @@ import LocationText from './LocationText';
 import AmenitiesText from './AmenitiesText';
 import VenueTitle from './VenueTitle';
 
+/**
+ * VenueContent component displaying detailed information about a venue.
+ * @param {Object} props - Component props.
+ * @param {Object} props.venue - The venue data.
+ * @returns {JSX.Element} - Rendered VenueContent component.
+ */
 export default function VenueContent({ venue }) {
   return (
     <div className="mb-5 max-w-[500px]">
       <div className="flex items-center justify-between">
         <VenueTitle title={venue.name} as="h1" className="mb-2.5 text-4xl" />
       </div>
-
-      {/* Rating */}
-      <div className="mb-2.5 flex items-center space-x-1">
+      <div className="mb-2.5 flex items-center space-x-1" aria-label={`Rating: ${venue.rating} out of 5`}>
         {Array.from({ length: 5 }, (_, index) => (
           <MdStar
             key={index}
@@ -20,30 +24,24 @@ export default function VenueContent({ venue }) {
         ))}
         <span className="text-gray-500">| Rating</span>
       </div>
-      {/* Location */}
       <div className="mb-1 flex items-center">
         <LocationText location={venue.location} />
       </div>
-      {/* Amenities */}
       <div className="mb-1 flex space-x-2">
         <p className="font-normal">Amenities:</p>
         <AmenitiesText meta={venue.meta} />
       </div>
-      {/* Max guests */}
       <div className="mb-1 flex space-x-2">
         <p className="font-normal">Maximum guests:</p>
         <p>{venue.maxGuests}</p>
       </div>
-      {/* Price */}
       <div className="mb-2.5">
         <p className="font-normal">{venue.price} NOK/Night</p>
       </div>
-      {/* Description */}
       <div className="mb-5">
         <p className="font-semibold">Description</p>
         <p>{venue.description}</p>
       </div>
-      {/* Host Info */}
       <div className="my-4 border-t border-gray-300"></div>
       <div className="mt-5 flex items-center">
         <img
