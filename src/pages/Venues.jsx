@@ -1,5 +1,5 @@
 import VenueCard from '../components/VenueCard';
-import Search from '../components/SearchVenues/VenueSearch';
+import VenueSearch from '../components/SearchVenues/VenueSearch';
 import useVenues from '../hooks/useVenues';
 import { useTitle } from '../hooks/useTitle';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
@@ -26,7 +26,7 @@ export default function Venues() {
       {/* Search input and filter option */}
       <div className="w-full">
         {/* Search input */}
-        <Search onSearch={handleSearch} />
+        <VenueSearch onSearch={handleSearch} />
       </div>
       {/* Venues grid */}
       <div className="mx-auto max-w-6xl">
