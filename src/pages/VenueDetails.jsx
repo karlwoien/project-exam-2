@@ -9,13 +9,18 @@ import useVenueActions from '../hooks/useVenueActions';
 import { useTitle } from '../hooks/useTitle';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
+/**
+ * VenueDetails page that displays detailed information about a venue.
+ * Includes venue images, content, booking options, and management actions for venue owners.
+ * @returns {JSX.Element} - Rendered VenueDetails component.
+ */
 export default function VenueDetails() {
   const { id } = useParams();
   const { venue, isLoading, error } = useVenue(id);
   const { user } = useAuthStore();
   const { handleDelete, isDeleting } = useVenueActions(id);
 
-  useTitle(venue ? venue.name : 'Loading...');
+  useTitle(venue?.name || 'Venue Details');
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-red-500">Error: {error}</p>;
@@ -24,18 +29,15 @@ export default function VenueDetails() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      {/* Venue Image */}
       <div className="mb-7">
         <VenueImage
           media={venue.media}
           className="h-auto max-h-[500px] w-full rounded-t-md object-cover"
         />
       </div>
-      {/* Content Grid */}
+
       <div className="grid grid-cols-1 items-start md:grid-cols-[2fr,1fr]">
-        {/* Venue Info (Venstre kolonne) */}
         <VenueContent venue={venue} />
-        {/* Booking Section // handling venue manager */}
         <div className="mx-auto md:mx-0">
           {isOwner ? (
             <UpcomingBookings
