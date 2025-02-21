@@ -1,5 +1,9 @@
 import * as yup from 'yup';
 
+/**
+ * Validation schema for venue creation and updates.
+ */
+
 const venueSchema = yup.object().shape({
   name: yup.string().required('Title is required'),
   description: yup.string().required('Description is required'),
