@@ -1,6 +1,9 @@
 import * as yup from 'yup';
 
-// Grunnleggende valideringsregler
+/**
+ * Validation schema for user registration, login, and profile updates.
+ */
+
 const name = yup
   .string()
   .matches(/^[a-zA-Z0-9_]+$/, 'Only letters, numbers, and underscores allowed')
@@ -40,7 +43,10 @@ const banner = yup
   })
   .optional();
 
-// Hovedschema
+/** 
+ * Main user schema containing all fields.
+ * Used for full user validation.
+ */
 export const userSchema = yup.object().shape({
   name,
   email,
@@ -51,11 +57,22 @@ export const userSchema = yup.object().shape({
   banner,
 });
 
-// Register and login schemaer
+/** 
+ * Schema for user registration.
+ * Includes name, email, password, and confirmPassword.
+ */
 export const registerSchema = userSchema.pick(['name', 'email', 'password', 'confirmPassword']);
+
+/** 
+ * Schema for user login.
+ * Includes only email and password.
+ */
 export const loginSchema = userSchema.pick(['email', 'password']);
 
-// Profiloppdatering schema
+/** 
+ * Schema for profile update.
+ * Allows updating bio, avatar URL, and banner URL.
+ */
 export const updateProfileSchema = yup.object().shape({
   bio: yup.string().max(160, 'Bio must be less than 160 characters').optional(),
   avatarUrl: yup.string().url('Must be a valid URL').optional(),
