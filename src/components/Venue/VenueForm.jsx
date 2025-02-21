@@ -1,46 +1,30 @@
 import { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import venueSchema from '../../forms/validation/venueSchema';
+import { Controller } from 'react-hook-form';
 import { createVenue, updateVenue } from '../../api/venues';
 import useAuthStore from '../../store/authStore';
 import { CiCirclePlus } from 'react-icons/ci';
 import { MdClose, MdStar } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import useVenueForm from '../../hooks/useVenueForm';
 
+/**
+ * VenueForm component for creating and updating venues.
+ * @param {Object} props - Component props.
+ * @param {Object} [props.venue] - The venue data to edit (if provided).
+ * @returns {JSX.Element} - Rendered VenueForm component.
+ */
 export default function VenueForm({ venue }) {
   const { token } = useAuthStore();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const isEditing = !!venue;
 
-  // Hook Form setup
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(venueSchema),
-    defaultValues: venue || {
-      name: '',
-      description: '',
-      media: [{ url: '' }],
-      price: '',
-      maxGuests: '',
-      rating: 0,
-      meta: { wifi: false, parking: false, breakfast: false, pets: false },
-      location: { address: '', city: '', zip: '', country: '' },
-    },
-  });
+  const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useVenueForm(venue);
 
   const media = watch('media');
   const rating = watch('rating');
 
-  // Funksjon for å sette rating
   const handleRatingClick = (index) => {
     setValue('rating', index + 1);
   };
@@ -60,7 +44,7 @@ export default function VenueForm({ venue }) {
       setError(null);
 
       const updatedMedia = data.media
-        .filter((m) => m.url.trim() !== '') // Filtrer ut tomme linjer
+        .filter((m) => m.url.trim() !== '')
         .map((m) => ({ url: m.url, alt: `Image of ${data.name || 'Venue'}` }));
 
       const venueData = { ...data, media: updatedMedia };
@@ -98,8 +82,6 @@ export default function VenueForm({ venue }) {
       <h2 className="mb-4 text-center text-xl font-normal">
         {isEditing ? 'Edit your venue' : 'Add new Venue'}
       </h2>
-
-      {/* Title */}
       <div className="mb-2.5">
         <label htmlFor="venue-name" className="block">
           Title
@@ -116,8 +98,6 @@ export default function VenueForm({ venue }) {
           {errors.name?.message}
         </p>
       </div>
-
-      {/* Description */}
       <div className="mb-2.5">
         <label htmlFor="venue-description" className="block">
           Description
@@ -134,8 +114,6 @@ export default function VenueForm({ venue }) {
           {errors.description?.message}
         </p>
       </div>
-
-      {/* Media URLs */}
       <div className="mb-2.5">
         <label>Images</label>
         {media.map((_, index) => (
@@ -166,8 +144,6 @@ export default function VenueForm({ venue }) {
           <span className="text-sm text-gray-500">Add more</span>
         </button>
       </div>
-
-      {/* Price & Max Guests */}
       <div className="mb-2.5 flex space-x-2">
         <div>
           <label htmlFor="venue-price">Price/night</label>
@@ -198,8 +174,6 @@ export default function VenueForm({ venue }) {
       <p id="maxGuests-error" className="text-red-500">
         {errors.maxGuests?.message}
       </p>
-
-      {/* Amenities */}
       <div className="mb-2.5">
         <label>Amenities</label>
         <div className="flex flex-wrap space-x-2.5">
@@ -222,8 +196,6 @@ export default function VenueForm({ venue }) {
           ))}
         </div>
       </div>
-
-      {/* Rating Section */}
       <div className="mb-2.5">
         <label className="block">Rating</label>
         <div className="flex items-center space-x-1">
@@ -240,8 +212,6 @@ export default function VenueForm({ venue }) {
           ))}
         </div>
       </div>
-
-      {/* Location */}
       <div className="mb-2.5">
         <label htmlFor="venue-address">Address</label>
         <input
