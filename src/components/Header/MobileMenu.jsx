@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdClose } from 'react-icons/md';
+import { logoutUser } from '../../utils/authUtils';
 
 /**
  * MobileMenu component for navigation on smaller screens.
@@ -7,10 +8,11 @@ import { MdClose } from 'react-icons/md';
  * @param {Object|null} props.user - Authenticated user data.
  * @param {boolean} props.menuOpen - Whether the menu is open.
  * @param {Function} props.setMenuOpen - Function to toggle menu state.
- * @param {Function} props.logoutUser - Function to log out the user.
  * @returns {JSX.Element} - Rendered MobileMenu component.
  */
-export default function MobileMenu({ user, menuOpen, setMenuOpen, logoutUser }) {
+export default function MobileMenu({ user, menuOpen, setMenuOpen }) {
+  const navigate = useNavigate();
+  
   return (
     <div
       className={`fixed left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50 transition-transform md:hidden ${
@@ -41,7 +43,13 @@ export default function MobileMenu({ user, menuOpen, setMenuOpen, logoutUser }) 
                 </Link>
               )}
               <div className="border-t border-gray-300"></div>
-              <button onClick={() => { logoutUser(); setMenuOpen(false); }} className="rounded-full py-2 text-left text-red-500 hover:text-red-700">
+              <button
+                onClick={() => {
+                  logoutUser(navigate);
+                  setMenuOpen(false);
+                }}
+                className="rounded-full py-2 text-left text-red-500 hover:text-red-700"
+              >
                 Logout
               </button>
             </>

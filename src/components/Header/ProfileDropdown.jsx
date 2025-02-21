@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRef, useEffect } from 'react';
+import { logoutUser } from '../../utils/authUtils';
 
 /**
  * ProfileDropdown component for user account actions.
@@ -7,11 +8,11 @@ import { useRef, useEffect } from 'react';
  * @param {Object} props.user - User data.
  * @param {boolean} props.dropdownOpen - Whether dropdown is open.
  * @param {Function} props.setDropdownOpen - Function to toggle dropdown state.
- * @param {Function} props.logoutUser - Function to log out the user.
  * @returns {JSX.Element} - Rendered ProfileDropdown component.
  */
-export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, logoutUser }) {
+export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen }) {
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -49,7 +50,13 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen, l
           </Link>
         )}
         <div className="border-t border-gray-300"></div>
-        <button onClick={() => { logoutUser(); setDropdownOpen(false); }} className="block w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100">
+        <button
+          onClick={() => {
+            logoutUser(navigate);
+            setDropdownOpen(false);
+          }}
+          className="block w-full px-4 py-2 text-left text-red-500 hover:bg-gray-100"
+        >
           Logout
         </button>
       </div>
