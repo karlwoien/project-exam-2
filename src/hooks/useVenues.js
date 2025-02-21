@@ -1,32 +1,40 @@
-import { useState, useEffect } from "react";
-import { fetchData } from "../api";
+import { useState, useEffect } from 'react';
+import { fetchData } from '../api';
 
+/**
+ * Custom hook for fetching and managing venue data.
+ * @returns {Object} Contains venues, loading state, error state, and a function to fetch venues.
+ */
 export default function useVenues() {
-    const [venues, setVenues] = useState([]); // Holder venues
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [venues, setVenues] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    // Funksjon for å hente venues (alle eller basert på søk)
-    const fetchVenues = async (query = "") => {
-        try {
-            setIsLoading(query ? false : true); // Unngå "Loading" for søk
-            const endpoint = query ? "/venues/search" : "/venues";
-            const params = query ? { q: query } : undefined;
+  /**
+   * Fetches venues from the API.
+   * If a query is provided, it searches for venues; otherwise, it fetches all venues sorted by creation date.
+   * @param {string} [query=''] - Optional search query.
+   */
+  const fetchVenues = async (query = '') => {
+    try {
+      setIsLoading(query ? false : true);
 
-            const data = await fetchData(endpoint, params);
-            setVenues(data.data);
-            setError(null); // Nullstill feil hvis alt fungerer
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+      const endpoint = query ? '/venues/search' : '/venues';
+      const params = query ? { q: query } : { sort: 'created', order: 'desc' };
 
-    // Automatisk henting av alle venues ved førstegangs render
-    useEffect(() => {
-        fetchVenues();
-    }, []);
+      const data = await fetchData(endpoint, params);
+      setVenues(data.data);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return { venues, isLoading, error, fetchVenues };
-};
+  useEffect(() => {
+    fetchVenues();
+  }, []);
+
+  return { venues, isLoading, error, fetchVenues };
+}

@@ -1,0 +1,9 @@
+node_modules
+build
+dist
+public
+assets
+.vscode
+.idea
+.DS_Store
+*.log

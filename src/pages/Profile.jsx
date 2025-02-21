@@ -1,35 +1,34 @@
-import useProfile from "../hooks/useProfile";
-import useAuthStore from "../store/authStore";
-import ProfileBookings from "../components/Profile/ProfileBookings";
-import ProfileVenues from "../components/Profile/ProfileVenues";
-import ProfileCard from "../components/Profile/ProfileCard";
-import { useTitle } from "../hooks/useTitle";
-import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import useProfile from '../hooks/useProfile';
+import useAuthStore from '../store/authStore';
+import ProfileBookings from '../components/Profile/ProfileBookings';
+import ProfileVenues from '../components/Profile/ProfileVenues';
+import ProfileCard from '../components/Profile/ProfileCard';
+import { useTitle } from '../hooks/useTitle';
+import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
+/**
+ * Profile page where users can view their profile details, bookings, or managed venues.
+ * @returns {JSX.Element} - Rendered Profile component.
+ */
 export default function Profile() {
-    const { user } = useAuthStore();
-    const { profile, venues, bookings, isLoading } = useProfile();
+  const { user } = useAuthStore();
+  const { profile, venues, bookings, isLoading } = useProfile();
 
-    useTitle(user ? user.name : "Loading...");
+  useTitle(user ? user.name : 'Loading...');
 
-    // **Vis en loading-spinner hvis dataene ikke er lastet inn enda**
-    if (isLoading || !profile) {
-        return ( 
-            <LoadingSpinner />
-        );
-    }
+  if (isLoading || !profile) {
+    return <LoadingSpinner />;
+  }
 
-    return (
-        <div className="max-w-5xl mx-auto">
-            {/* Profile Info */}
-            <ProfileCard profile={profile} />
+  return (
+    <div className="mx-auto max-w-5xl">
+      <ProfileCard profile={profile} />
 
-            {/* Conditional Display - **Sjekk at bookings eller venues finnes før vi viser dem** */}
-            {user.venueManager && venues ? (
-                <ProfileVenues venues={venues} />
-            ) : bookings ? (
-                <ProfileBookings bookings={bookings} />
-            ) : null} 
-        </div>
-    );
+      {user.venueManager && venues ? (
+        <ProfileVenues venues={venues} />
+      ) : bookings ? (
+        <ProfileBookings bookings={bookings} />
+      ) : null}
+    </div>
+  );
 }

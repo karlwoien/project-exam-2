@@ -1,82 +1,78 @@
-import { useState } from "react";
-import useAuthStore from "../../store/authStore";
-import ProfileEditForm from "./ProfileEditForm";
+import { useState } from 'react';
+import useAuthStore from '../../store/authStore';
+import ProfileEditForm from './ProfileEditForm';
 
+/**
+ * Displays user profile information with an editable profile modal.
+ * @returns {JSX.Element} - Rendered ProfileCard component.
+ */
 export default function ProfileCard() {
-    const { user } = useAuthStore();
-    const [isEditing, setIsEditing] = useState(false);
+  const { user } = useAuthStore();
+  const [isEditing, setIsEditing] = useState(false);
 
-    if (!user) {
-        return <p className="text-center text-red-500">No user data found.</p>;
-    }
+  if (!user) {
+    return <p className="text-center text-red-500">No user data found.</p>;
+  }
 
-    return (
-        <div className=" rounded-t-lg relative mb-5">
-            {/* Banner */}
-            <div className="w-full h-40 md:h-60 rounded-t-lg overflow-hidden">
-                {user.banner?.url ? (
-                    <img
-                        src={user.banner.url}
-                        alt={user.banner.alt || "Profile banner"}
-                        className="w-full h-full object-cover"
-                    />
-                ) : (
-                    <div className="w-full h-full bg-gradient-to-r from-bg-primary to-bg-highlight"></div>
-                )}
-            </div>
+  const openEditModal = () => setIsEditing(true);
+  const closeEditModal = () => setIsEditing(false);
 
-            {/* Flex container for profilbilde + info */}
-            <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 mt-[-50px] md:mt-[-40px] px-4">
-                
-                {/* Venstre kolonne - Profilbilde og Rediger-knapp */}
-                <div className="flex flex-col items-center">
-                    {/* Profilbilde Overlapper banner */}
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md">
-                        <img
-                            src={user.avatar?.url || "https://via.placeholder.com/150"}
-                            alt={user.name}
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
+  return (
+    <div className="relative mb-5 rounded-t-lg">
+      <div className="h-40 w-full overflow-hidden rounded-t-lg md:h-60">
+        {user.banner?.url ? (
+          <img
+            src={user.banner.url}
+            alt={user.banner.alt || 'Profile banner'}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <div className="h-full w-full bg-gradient-to-r from-bg-primary to-bg-highlight"></div>
+        )}
+      </div>
 
-                    {/* Rediger Profil-knapp */}
-                    <button
-                        onClick={() => setIsEditing(true)}
-                        className="mt-4 px-4 py-2 bg-bg-primary text-white rounded-full hover:bg-bg-highlight transition"
-                    >
-                        Edit Profile
-                    </button>
-                </div>
+      <div className="mt-[-50px] flex flex-col items-center space-y-4 px-4 md:mt-[-40px] md:flex-row md:items-start md:space-x-6 md:space-y-0">
+        <div className="flex flex-col items-center">
+          <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-md">
+            <img
+              src={user.avatar?.url || 'https://via.placeholder.com/150'}
+              alt={user.name}
+              className="h-full w-full object-cover"
+            />
+          </div>
 
-                {/* Høyre kolonne - Brukerinformasjon */}
-                <div className="text-center md:text-left flex-col md:pt-12">
-                    <h2 className="text-2xl font-bold">{user.name}</h2>
-                    <p className="text-gray-500">{user.email}</p>
-                    <span className={`inline-block mt-2 px-2 py-1.5 text-sm rounded-md  ${user.venueManager ? "bg-gray-200 text-gray-800" : "bg-gray-200 text-gray-800"}`}>
-                        {user.venueManager ? "Venue Manager" : "Traveler"}
-                    </span>
-
-                    {/* Bio hvis bruker har */}
-                    {user.bio && <p className="mt-2">{user.bio}</p>}
-                </div>
-            </div>
-
-            {/* Modal for redigering */}
-            {isEditing && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-96 relative">
-                        {/* Lukkeknapp */}
-                        <button
-                            onClick={() => setIsEditing(false)}
-                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-                        >
-                            Close
-                        </button>
-                        {/* Redigeringsskjema */}
-                        <ProfileEditForm profile={user} onClose={() => setIsEditing(false)} />
-                    </div>
-                </div>
-            )}
+          <button
+            onClick={openEditModal}
+            className="mt-4 rounded-full bg-bg-primary px-4 py-2 text-white transition hover:bg-bg-highlight"
+          >
+            Edit Profile
+          </button>
         </div>
-    );
+
+        <div className="flex-col text-center md:pt-12 md:text-left">
+          <h2 className="text-2xl font-bold">{user.name}</h2>
+          <p className="text-gray-500">{user.email}</p>
+          <span className="mt-2 inline-block rounded-md bg-gray-200 px-2 py-1.5 text-sm text-gray-800">
+            {user.venueManager ? 'Venue Manager' : 'Traveler'}
+          </span>
+
+          {user.bio && <p className="mt-2">{user.bio}</p>}
+        </div>
+      </div>
+
+      {isEditing && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="relative w-96 rounded-lg bg-white p-6 shadow-lg">
+            <button
+              onClick={closeEditModal}
+              className="absolute right-2 top-2 text-gray-500 hover:text-gray-800"
+            >
+              Close
+            </button>
+            <ProfileEditForm profile={user} onClose={closeEditModal} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

@@ -1,42 +1,44 @@
-import React from "react";
-import VenueCard from "../components/VenueCard";
-import Search from "../components/SearchVenues/VenueSearch";
-import useVenues from "../hooks/useVenues";
-import { useTitle } from "../hooks/useTitle";
-import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import VenueCard from '../components/VenueCard';
+import VenueSearch from '../components/SearchVenues/VenueSearch';
+import useVenues from '../hooks/useVenues';
+import { useTitle } from '../hooks/useTitle';
+import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
+/**
+ * Venues page displaying a list of available venues with search functionality.
+ * @returns {JSX.Element} - Rendered Venues page.
+ */
 export default function Venues() {
-    useTitle("Venues")
-    const { venues, isLoading, error, fetchVenues } = useVenues();
+  useTitle('Venues');
+  const { venues, isLoading, error, fetchVenues } = useVenues();
 
-    const handleSearch = (query) => {
-      fetchVenues(query.trim() || ""); // Bruk query eller hent alle venues
-    };
+  const handleSearch = (query) => {
+    const trimmedQuery = query.trim();
+    fetchVenues(trimmedQuery);
+  };
 
-    if (isLoading) {
-        return <LoadingSpinner />;
-    }
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
-    if (error) {
-      return <p className="text-red-500">Error: {error}</p>;
-    }
+  if (error) {
+    return <p className="text-red-500">Error: {error}</p>;
+  }
 
-    return (
-        <div className="max-w-5xl mx-auto">
-            <h1 className="text-bg-highlight text-4xl mb-5">EXPLORE VENUES</h1>
-            {/* Search input and filter option */}
-            <div className="w-full">
-                {/* Search input */}
-                <Search onSearch={handleSearch} />
-            </div>
-            {/* Venues grid */}
-            <div className=" max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 auto-rows-fr">
-                    {venues.map((venue) => (
-                        <VenueCard key={venue.id} venue={venue} />
-                    ))}
-                </div>
-            </div>
+  return (
+    <div className="mx-auto max-w-5xl">
+      <h1 className="mb-5 text-4xl text-bg-highlight">EXPLORE VENUES</h1>
+      <div className="w-full">
+        <VenueSearch onSearch={handleSearch} />
+      </div>
+
+      <div className="mx-auto max-w-6xl">
+        <div className="grid auto-rows-fr grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3">
+          {venues.map((venue) => (
+            <VenueCard key={venue.id} venue={venue} />
+          ))}
         </div>
-    );
+      </div>
+    </div>
+  );
 }

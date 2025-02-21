@@ -1,119 +1,121 @@
-import { API_HOLIDAZE_URL, API_KEY } from "./constants";
+import { API_HOLIDAZE_URL, API_KEY } from './constants';
 
-// GET venues - Venue Manager
+/**
+ * Fetches all venues created by a specific user.
+ * @param {string} username - The username of the venue owner.
+ * @param {string} token - The authentication token.
+ * @returns {Promise<Object>} - The user's venues data.
+ * @throws {Error} - If the request fails.
+ */
 export async function fetchUserVenues(username, token) {
-    try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/profiles/${username}/venues`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY,
-            },
-        });
+  const response = await fetch(`${API_HOLIDAZE_URL}/profiles/${username}/venues`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'X-Noroff-API-Key': API_KEY,
+    },
+  });
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch venues: ${response.status}`);
-        }
+  if (!response.ok) {
+    throw new Error(`Failed to fetch venues: ${response.status}`);
+  }
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error fetching venues:", error.message);
-        throw error;
-    }
+  return await response.json();
 }
 
-// Create venue - post method
+/**
+ * Creates a new venue.
+ * @param {Object} venueData - The venue details.
+ * @param {string} token - The authentication token.
+ * @returns {Promise<Object>} - The created venue data.
+ * @throws {Error} - If the request fails.
+ */
 export async function createVenue(venueData, token) {
-    try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/venues`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY,
-            },
-            body: JSON.stringify(venueData),
-        });
+  const response = await fetch(`${API_HOLIDAZE_URL}/venues`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'X-Noroff-API-Key': API_KEY,
+    },
+    body: JSON.stringify(venueData),
+  });
 
-        if (!response.ok) {
-            throw new Error(`Failed to create venue: ${response.status}`);
-        }
+  if (!response.ok) {
+    throw new Error(`Failed to create venue: ${response.status}`);
+  }
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error creating venue:", error.message);
-        throw error;
-    }
+  return await response.json();
 }
 
-// DELETE VENUE - delete method
+/**
+ * Deletes a venue.
+ * @param {string} venueId - The ID of the venue to delete.
+ * @param {string} token - The authentication token.
+ * @returns {Promise<boolean>} - True if the deletion was successful.
+ * @throws {Error} - If the request fails.
+ */
 export async function deleteVenue(venueId, token) {
-    try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY,
-            },
-        });
+  const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'X-Noroff-API-Key': API_KEY,
+    },
+  });
 
-        if (!response.ok) {
-            throw new Error(`Failed to delete venue: ${response.status}`);
-        }
+  if (!response.ok) {
+    throw new Error(`Failed to delete venue: ${response.status}`);
+  }
 
-        return true; // Returnerer suksess
-    } catch (error) {
-        console.error("Error deleting venue:", error.message);
-        throw error;
-    }
+  return true; // Returnerer suksess
 }
 
-//UPDATE VENUE - PUT method
+/**
+ * Updates an existing venue.
+ * @param {string} venueId - The ID of the venue to update.
+ * @param {Object} updatedData - The updated venue details.
+ * @param {string} token - The authentication token.
+ * @returns {Promise<Object>} - The updated venue data.
+ * @throws {Error} - If the request fails.
+ */
 export async function updateVenue(venueId, updatedData, token) {
-    try {
-        const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-                "X-Noroff-API-Key": API_KEY,
-            },
-            body: JSON.stringify(updatedData),
-        });
+  const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      'X-Noroff-API-Key': API_KEY,
+    },
+    body: JSON.stringify(updatedData),
+  });
 
-        if (!response.ok) {
-            throw new Error(`Failed to update venue: ${response.status}`);
-        }
+  if (!response.ok) {
+    throw new Error(`Failed to update venue: ${response.status}`);
+  }
 
-        return await response.json();
-    } catch (error) {
-        console.error("Error updating venue:", error.message);
-        throw error;
-    }
+  return await response.json();
 }
 
-// fetch venue id
+/**
+ * Fetches details of a specific venue, including its owner and bookings.
+ * @param {string} venueId - The ID of the venue to fetch.
+ * @returns {Promise<Object>} - The venue details.
+ * @throws {Error} - If the request fails.
+ */
 export async function fetchVenue(venueId) {
-    try {
-        const url = `${API_HOLIDAZE_URL}/venues/${venueId}?_owner=true&_bookings=true`;
-        console.log(`Fetching venue with bookings from: ${url}`);
+  const response = await fetch(`${API_HOLIDAZE_URL}/venues/${venueId}?_owner=true&_bookings=true`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Noroff-API-Key': API_KEY,
+    },
+  });
 
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Noroff-API-Key": API_KEY,
-            },
-        });
+  if (!response.ok) {
+    throw new Error(`Failed to fetch venue: ${response.status}`);
+  }
 
-        if (!response.ok) {
-            throw new Error(`Failed to fetch venue: ${response.status}`);
-        }
-
-        const venueData = await response.json();
-        return venueData;
-    } catch (error) {
-        throw error;
-    }
+  return await response.json();
 }
