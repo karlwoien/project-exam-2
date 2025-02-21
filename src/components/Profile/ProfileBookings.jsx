@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
 import LinkButton from '../Button/LinkButton';
 
+/**
+ * Displays a list of the user's upcoming bookings.
+ * @param {Object} props - Component properties.
+ * @param {Array} props.bookings - List of bookings.
+ * @returns {JSX.Element} - Rendered ProfileBookings component.
+ */
 export default function ProfileBookings({ bookings }) {
-  // Filtrer ut kun kommende bookinger
   const now = new Date();
   const upcomingBookings = bookings
     .filter((booking) => new Date(booking.dateFrom) > now)
-    .sort((a, b) => new Date(a.dateFrom) - new Date(b.dateFrom)); // Sorterer etter nærmeste dato først
+    .sort((a, b) => new Date(a.dateFrom) - new Date(b.dateFrom));
 
-  if (!upcomingBookings.length)
+  if (!upcomingBookings.length) {
     return (
       <div className="text-center">
         <p className="mb-2 text-gray-500">You have no upcoming bookings.</p>
         <LinkButton to="/venues" label="Explore Venues" variant="accent" />
       </div>
     );
+  }
 
   return (
     <div className="mt-8">
