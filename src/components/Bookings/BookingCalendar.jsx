@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -6,38 +6,55 @@ import { createBooking } from '../../api/bookings';
 import useAuthStore from '../../store/authStore';
 import { toast } from 'react-toastify';
 
+/**
+ * BookingCalendar component for selecting dates and making a reservation.
+ * @param {Object} props - Component props.
+ * @param {Array} props.bookings - List of existing bookings.
+ * @param {number} props.maxGuests - Maximum number of guests allowed.
+ * @param {string} props.venueId - The venue ID.
+ * @returns {JSX.Element} - Rendered BookingCalendar component.
+ */
 export default function BookingCalendar({ bookings, maxGuests, venueId }) {
-  const [dateRange, setDateRange] = useState([null, null]); // Start og sluttdato
+  const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
   const [guests, setGuests] = useState(1);
   const { user, token } = useAuthStore();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Finn bookede datoer for å deaktivere dem i kalenderen
-  const bookedDates = bookings.flatMap((booking) => {
-    const start = new Date(booking.dateFrom);
+  /**
+   * Generates a list of booked dates based on existing bookings.
+   * @returns {Date[]} - Array of booked dates.
+   */
+  const bookedDates = bookings.reduce((dates, booking) => {
+    let current = new Date(booking.dateFrom);
     const end = new Date(booking.dateTo);
-    const dates = [];
-    while (start <= end) {
-      dates.push(new Date(start));
-      start.setDate(start.getDate() + 1);
+
+    while (current <= end) {
+      dates.push(new Date(current));
+      current.setDate(current.getDate() + 1);
     }
     return dates;
-  });
+  }, []);
 
-  // Håndter innsending av booking
-  async function handleBooking() {
-    if (!user) {
-      setError('You must be logged in to book a venue.');
-      return;
-    }
-    if (!startDate || !endDate) {
-      setError('Please select a valid check-in and check-out date.');
-      return;
-    }
-    if (guests < 1 || guests > maxGuests) {
-      setError(`Guest count must be between 1 and ${maxGuests}.`);
+  /**
+   * Validates booking details before submission.
+   * @returns {string|null} - Error message if validation fails, otherwise null.
+   */
+  const validateBooking = () => {
+    if (!user) return 'You must be logged in to book a venue.';
+    if (!startDate || !endDate) return 'Please select a valid check-in and check-out date.';
+    if (guests < 1 || guests > maxGuests) return `Guest count must be between 1 and ${maxGuests}.`;
+    return null;
+  };
+
+  /**
+   * Handles the booking submission, validating input and sending the request.
+   */
+  const handleBooking = useCallback(async () => {
+    const validationError = validateBooking();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
@@ -50,17 +67,17 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
       });
       setDateRange([null, null]);
       setGuests(1);
+      setError(null);
     } catch (err) {
       setError('Error creating booking. Please try again.');
     }
-  }
+  }, [startDate, endDate, guests, venueId, token, navigate]);
 
   return (
     <div className="w-full max-w-[350px]">
       <h3 className="mb-1 text-2xl">Reserve your stay</h3>
       <h4 className="mb-1 text-lg">Select dates</h4>
 
-      {/* Inline DatePicker */}
       <DatePicker
         selected={startDate}
         onChange={(update) => setDateRange(update)}
@@ -74,7 +91,6 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
         highlightDates={[{ 'booked-dates': bookedDates }]}
       />
 
-      {/* Guest Selection */}
       <div className="mt-3">
         <div className="flex items-center justify-between">
           <label className="text-lg font-normal">How many guests?</label>
@@ -89,15 +105,12 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
         </div>
       </div>
 
-      {/* Error / Success Messages */}
       {error && <p className="mt-2 text-red-500">{error}</p>}
 
-      {/* Hindre Venue Manager fra å booke */}
       {user?.venueManager && (
         <p className="mt-4 text-sm text-red-500">Please use a Traveler account to reserve.</p>
       )}
 
-      {/* Conditional Buttons */}
       {user ? (
         !user.venueManager ? (
           <button
