@@ -39,10 +39,16 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center space-x-5 md:flex">
-          <Link to="/" className="text-lg transition-transform duration-300 hover:scale-105 hover:text-bg-highlight">
+          <Link
+            to="/"
+            className="text-lg transition-transform duration-300 hover:scale-105 hover:text-bg-highlight"
+          >
             Home
           </Link>
-          <Link to="/venues" className="text-lg transition-transform duration-300 hover:scale-105 hover:text-bg-highlight">
+          <Link
+            to="/venues"
+            className="text-lg transition-transform duration-300 hover:scale-105 hover:text-bg-highlight"
+          >
             Venues
           </Link>
 
@@ -66,7 +72,12 @@ export default function Header() {
         </button>
       </div>
 
-      <MobileMenu user={user} menuOpen={menuOpen} setMenuOpen={setMenuOpen} logoutUser={logoutUser} />
+      <MobileMenu
+        user={user}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        logoutUser={logoutUser}
+      />
     </header>
   );
 }

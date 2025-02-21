@@ -32,20 +32,32 @@ export default function ProfileDropdown({ user, dropdownOpen, setDropdownOpen })
         className="flex items-center space-x-2 rounded-md bg-transparent py-2 transition-transform duration-300 hover:scale-105 hover:text-bg-highlight"
       >
         <p>Profile</p>
-        <img src={user.avatar?.url || 'https://via.placeholder.com/40'} alt="Profile" className="h-8 w-8 rounded-full border border-white" />
+        <img
+          src={user.avatar?.url || 'https://via.placeholder.com/40'}
+          alt="Profile"
+          className="h-8 w-8 rounded-full border border-white"
+        />
       </button>
 
       <div
-        className={`absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-md border bg-white text-black shadow-lg transition-transform origin-top ${
+        className={`absolute right-0 z-50 mt-2 w-48 origin-top overflow-hidden rounded-md border bg-white text-black shadow-lg transition-transform ${
           dropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'
         }`}
       >
-        <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setDropdownOpen(false)}>
+        <Link
+          to="/profile"
+          className="block px-4 py-2 hover:bg-gray-100"
+          onClick={() => setDropdownOpen(false)}
+        >
           View Profile
         </Link>
 
         {user.venueManager && (
-          <Link to="/venues/new" className="block px-4 py-2 hover:bg-gray-100" onClick={() => setDropdownOpen(false)}>
+          <Link
+            to="/venues/new"
+            className="block px-4 py-2 hover:bg-gray-100"
+            onClick={() => setDropdownOpen(false)}
+          >
             Add Venue
           </Link>
         )}

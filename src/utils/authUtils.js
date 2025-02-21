@@ -5,7 +5,7 @@ const USER_KEY = 'loggedInUser';
 /**
  * Retrieves the logged-in user.
  * If not found in Zustand store, falls back to Local Storage.
- * 
+ *
  * @returns {Object|null} - The logged-in user data or null if not found.
  */
 export function getUser() {
@@ -22,7 +22,7 @@ export function getUser() {
 export function logoutUser(navigate) {
   useAuthStore.getState().logout();
   localStorage.removeItem(USER_KEY);
-  
+
   if (navigate) {
     navigate('/login');
   }

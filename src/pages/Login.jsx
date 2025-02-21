@@ -17,9 +17,9 @@ import NotificationMessage from '../components/Notification/NotificationsMessage
  * @returns {JSX.Element} - Rendered Login component.
  */
 /**
-   * Handles the form submission and user login process.
-   * @param {Object} data - User credentials.
-   */
+ * Handles the form submission and user login process.
+ * @param {Object} data - User credentials.
+ */
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();

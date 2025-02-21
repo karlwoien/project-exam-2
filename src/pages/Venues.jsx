@@ -31,7 +31,7 @@ export default function Venues() {
       <div className="w-full">
         <VenueSearch onSearch={handleSearch} />
       </div>
-      
+
       <div className="mx-auto max-w-6xl">
         <div className="grid auto-rows-fr grid-cols-1 gap-7 sm:grid-cols-2 md:grid-cols-3">
           {venues.map((venue) => (

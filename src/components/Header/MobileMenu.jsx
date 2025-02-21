@@ -12,7 +12,7 @@ import { logoutUser } from '../../utils/authUtils';
  */
 export default function MobileMenu({ user, menuOpen, setMenuOpen }) {
   const navigate = useNavigate();
-  
+
   return (
     <div
       className={`fixed left-0 top-0 z-40 h-full w-full bg-black bg-opacity-50 transition-transform md:hidden ${
@@ -34,11 +34,19 @@ export default function MobileMenu({ user, menuOpen, setMenuOpen }) {
 
           {user ? (
             <>
-              <Link to="/profile" className="hover:text-bg-highlight" onClick={() => setMenuOpen(false)}>
+              <Link
+                to="/profile"
+                className="hover:text-bg-highlight"
+                onClick={() => setMenuOpen(false)}
+              >
                 Profile
               </Link>
               {user.venueManager && (
-                <Link to="/venues/new" className="hover:text-bg-highlight" onClick={() => setMenuOpen(false)}>
+                <Link
+                  to="/venues/new"
+                  className="hover:text-bg-highlight"
+                  onClick={() => setMenuOpen(false)}
+                >
                   Add Venue
                 </Link>
               )}
@@ -55,10 +63,18 @@ export default function MobileMenu({ user, menuOpen, setMenuOpen }) {
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:text-bg-highlight" onClick={() => setMenuOpen(false)}>
+              <Link
+                to="/login"
+                className="hover:text-bg-highlight"
+                onClick={() => setMenuOpen(false)}
+              >
                 Login
               </Link>
-              <Link to="/register" className="hover:text-bg-highlight" onClick={() => setMenuOpen(false)}>
+              <Link
+                to="/register"
+                className="hover:text-bg-highlight"
+                onClick={() => setMenuOpen(false)}
+              >
                 Register
               </Link>
             </>

@@ -9,7 +9,7 @@ export default function DeleteVenueButton({ handleDelete, isDeleting }) {
   return (
     <button
       onClick={handleDelete}
-      className="rounded-full bg-red-500 px-4 py-2 text-white transition hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+      className="rounded-full bg-red-500 px-4 py-2 text-white transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-50"
       disabled={isDeleting}
       aria-disabled={isDeleting}
       aria-label="Delete venue"

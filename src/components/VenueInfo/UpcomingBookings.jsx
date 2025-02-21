@@ -39,7 +39,7 @@ export default function UpcomingBookings({ bookings, venueId, handleDelete, isDe
           ))}
         </ul>
       ) : (
-        <p className="text-gray-500 italic">No bookings made yet</p>
+        <p className="italic text-gray-500">No bookings made yet</p>
       )}
 
       <h3 className="mb-2.5 mt-4 text-xl font-normal">Manage your venue</h3>

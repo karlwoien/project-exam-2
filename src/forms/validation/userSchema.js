@@ -43,7 +43,7 @@ const banner = yup
   })
   .optional();
 
-/** 
+/**
  * Main user schema containing all fields.
  * Used for full user validation.
  */
@@ -57,19 +57,19 @@ export const userSchema = yup.object().shape({
   banner,
 });
 
-/** 
+/**
  * Schema for user registration.
  * Includes name, email, password, and confirmPassword.
  */
 export const registerSchema = userSchema.pick(['name', 'email', 'password', 'confirmPassword']);
 
-/** 
+/**
  * Schema for user login.
  * Includes only email and password.
  */
 export const loginSchema = userSchema.pick(['email', 'password']);
 
-/** 
+/**
  * Schema for profile update.
  * Allows updating bio, avatar URL, and banner URL.
  */

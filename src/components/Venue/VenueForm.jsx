@@ -20,7 +20,14 @@ export default function VenueForm({ venue }) {
   const [error, setError] = useState(null);
   const isEditing = !!venue;
 
-  const { register, handleSubmit, control, setValue, watch, formState: { errors } } = useVenueForm(venue);
+  const {
+    register,
+    handleSubmit,
+    control,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useVenueForm(venue);
 
   const media = watch('media');
   const rating = watch('rating');

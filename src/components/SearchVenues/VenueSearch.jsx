@@ -17,7 +17,7 @@ export default function VenueSearch({ onSearch }) {
 
   return (
     <div className="mb-4">
-       <label htmlFor="venue-search" className="sr-only">
+      <label htmlFor="venue-search" className="sr-only">
         Search for venues
       </label>
       <input

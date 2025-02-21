@@ -12,7 +12,8 @@ export default function LocationText({ location }) {
   if (!location) return <p>No location specified</p>;
 
   const { city = '', country = '' } = location;
-  const locationText = city || country ? `${city}${city && country ? ', ' : ''}${country}` : 'No location specified';
+  const locationText =
+    city || country ? `${city}${city && country ? ', ' : ''}${country}` : 'No location specified';
 
   return (
     <div className="flex items-center space-x-2">

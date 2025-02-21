@@ -3,14 +3,14 @@ import { persist } from 'zustand/middleware';
 
 /**
  * Zustand store for authentication state management.
- * 
+ *
  * This store handles user authentication, including:
  * - Storing user data and authentication tokens.
  * - Logging in and logging out users.
  * - Updating user profile data.
- * 
+ *
  * The store persists in local storage under the key `auth-storage`.
- * 
+ *
  * @property {Object|null} user - The currently logged-in user data.
  * @property {string|null} token - The authentication token.
  * @method login - Logs in a user and stores their data.

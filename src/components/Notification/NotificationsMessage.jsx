@@ -12,7 +12,9 @@ export default function NotificationMessage({ type = 'success', message }) {
   const typeClasses = {
     success: 'bg-green-100 text-green-800',
     error: 'bg-red-100 text-red-800',
-  }
+  };
 
-  return <div className={`${baseClasses} ${typeClasses[type] || typeClasses.success}`}>{message}</div>;
+  return (
+    <div className={`${baseClasses} ${typeClasses[type] || typeClasses.success}`}>{message}</div>
+  );
 }

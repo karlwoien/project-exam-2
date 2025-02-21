@@ -15,7 +15,10 @@ export default function VenueContent({ venue }) {
       <div className="flex items-center justify-between">
         <VenueTitle title={venue.name} as="h1" className="mb-2.5 text-4xl" />
       </div>
-      <div className="mb-2.5 flex items-center space-x-1" aria-label={`Rating: ${venue.rating} out of 5`}>
+      <div
+        className="mb-2.5 flex items-center space-x-1"
+        aria-label={`Rating: ${venue.rating} out of 5`}
+      >
         {Array.from({ length: 5 }, (_, index) => (
           <MdStar
             key={index}
