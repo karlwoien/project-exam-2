@@ -1,21 +1,30 @@
 import { useState, useEffect } from 'react';
 import { fetchData } from '../api';
 
+/**
+ * Custom hook for fetching and managing venue data.
+ * @returns {Object} Contains venues, loading state, error state, and a function to fetch venues.
+ */
 export default function useVenues() {
-  const [venues, setVenues] = useState([]); // Holder venues
+  const [venues, setVenues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Funksjon for å hente venues (alle eller basert på søk)
+  /**
+   * Fetches venues from the API.
+   * If a query is provided, it searches for venues; otherwise, it fetches all venues sorted by creation date.
+   * @param {string} [query=''] - Optional search query.
+   */
   const fetchVenues = async (query = '') => {
     try {
-      setIsLoading(query ? false : true); // Unngå "Loading" for søk
+      setIsLoading(query ? false : true);
+
       const endpoint = query ? '/venues/search' : '/venues';
-      const params = query ? { q: query } : undefined;
+      const params = query ? { q: query } : { sort: 'created', order: 'desc' };
 
       const data = await fetchData(endpoint, params);
       setVenues(data.data);
-      setError(null); // Nullstill feil hvis alt fungerer
+      setError(null);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -23,7 +32,6 @@ export default function useVenues() {
     }
   };
 
-  // Automatisk henting av alle venues ved førstegangs render
   useEffect(() => {
     fetchVenues();
   }, []);

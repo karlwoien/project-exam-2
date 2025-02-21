@@ -4,14 +4,18 @@ import { deleteVenue } from '../api';
 import useAuthStore from '../store/authStore';
 import { toast } from 'react-toastify';
 
+/**
+ * Custom hook for handling venue actions such as deleting a venue.
+ * @param {string} venueId - The ID of the venue to be deleted.
+ * @returns {Object} - A function to delete the venue and a boolean indicating if deletion is in progress.
+ */
 export default function useVenueActions(venueId) {
   const { token } = useAuthStore();
   const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm('Are you sure you want to delete this venue?');
-    if (!confirmDelete) return;
+    if (!window.confirm('Are you sure you want to delete this venue?')) return;
 
     setIsDeleting(true);
     try {
@@ -22,8 +26,7 @@ export default function useVenueActions(venueId) {
         onClose: () => navigate('/profile'),
       });
     } catch (error) {
-      console.error('Error deleting venue:', error.message);
-      alert('Failed to delete venue.');
+      toast.error('Failed to delete venue. Please try again.');
     } finally {
       setIsDeleting(false);
     }

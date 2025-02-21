@@ -3,6 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 import { fetchUserProfile, fetchUserVenues, fetchUserBookings } from '../api';
 
+/**
+ * Custom hook for fetching and managing user profile data.
+ * Redirects to login if no user is found.
+ * @returns {Object} - User profile, venues (if venue manager), bookings (if traveler), and error state.
+ */
 export default function useProfile() {
   const { user, token } = useAuthStore();
   const [profile, setProfile] = useState(null);
@@ -19,15 +24,15 @@ export default function useProfile() {
 
     async function fetchProfileData() {
       try {
-        const profileData = await fetchUserProfile(user.name, token);
-        setProfile(profileData.data);
+        const profileResponse = await fetchUserProfile(user.name, token);
+        setProfile(profileResponse.data);
 
         if (user.venueManager) {
-          const userVenues = await fetchUserVenues(user.name, token);
-          setVenues(userVenues.data);
+          const venuesResponse = await fetchUserVenues(user.name, token);
+          setVenues(venuesResponse.data);
         } else {
-          const userBookings = await fetchUserBookings(user.name, token);
-          setBookings(userBookings.data);
+          const bookingsResponse = await fetchUserBookings(user.name, token);
+          setBookings(bookingsResponse.data);
         }
       } catch (err) {
         setError(err.message);
