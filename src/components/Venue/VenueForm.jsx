@@ -44,7 +44,7 @@ export default function VenueForm({ venue }) {
       setError(null);
 
       const updatedMedia = data.media
-        .filter((m) => m.url.trim() !== '')
+        .filter((m) => (m.url?.trim() || '') !== '')
         .map((m) => ({ url: m.url, alt: `Image of ${data.name || 'Venue'}` }));
 
       const venueData = { ...data, media: updatedMedia };
