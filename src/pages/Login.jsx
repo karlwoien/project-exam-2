@@ -9,7 +9,7 @@ import InputField from '../forms/InputField';
 import { Link } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
 import { toast } from 'react-toastify';
-import NotificationMessage from '../components/NotificationsMessage';
+import NotificationMessage from '../components/Notification/NotificationsMessage';
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState(''); // Bruker kun denne for feil
