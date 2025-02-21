@@ -2,6 +2,10 @@ import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
+/**
+ * Layout component that wraps the application with a header, footer, and dynamic content.
+ * @returns {JSX.Element} - Rendered Layout component.
+ */
 export default function Layout() {
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -16,5 +20,3 @@ export default function Layout() {
     </>
   );
 }
-
-//<main className="flex-grow pt-20 md:pt-24 lg:pt-28">
