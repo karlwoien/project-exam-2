@@ -8,8 +8,11 @@ import Venues from '../pages/Venues';
 import VenueDetails from '../pages/VenueDetails';
 import AddVenue from '../pages/AddVenue';
 import EditVenue from '../pages/EditVenue';
-import Error from '../pages/Error';
 
+/**
+ * Defines the main application routes using React Router.
+ * @constant {object[]} router - Route configuration for the application.
+ */
 const router = createBrowserRouter([
   {
     path: '/',
@@ -43,10 +46,6 @@ const router = createBrowserRouter([
       {
         path: '/venue/:id/edit',
         element: <EditVenue />,
-      },
-      {
-        path: '*',
-        element: <Error />,
       },
     ],
   },
