@@ -23,11 +23,16 @@ export default function LookaheadSearch() {
 
   return (
     <div className="relative w-full">
+      <label htmlFor="search-venues" className="sr-only">
+        Search for venues
+      </label>
       <input
         type="text"
+        id="search-venues"
         placeholder="Search venues..."
         value={query}
         onChange={handleQueryChange}
+        aria-label="Search for venues"
         className="w-full rounded-full border-2 bg-transparent px-4 py-2 text-white placeholder-white focus:border-transparent focus:outline-none focus:ring-2 focus:ring-bg-highlight"
       />
       {query.length > 1 && Array.isArray(searchResults) && searchResults.length > 0 && (
