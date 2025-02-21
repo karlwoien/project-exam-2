@@ -11,11 +11,16 @@ import { Link } from 'react-router-dom';
 import { useTitle } from '../hooks/useTitle';
 import { toast } from 'react-toastify';
 
+/**
+ * Register page where users can create an account for either a traveler or venue manager.
+ * @returns {JSX.Element} - Rendered Register component.
+ */
+
 export default function Register() {
   const [error, setError] = useState(null);
   const [venueManager, setVenueManager] = useState(false);
-  const navigate = useNavigate(); // Bruker React Router for navigasjon
-  const setUser = useAuthStore((state) => state.login); // Henter Zustand login-funksjon
+  const navigate = useNavigate();
+  const setUser = useAuthStore((state) => state.login);
 
   const {
     register,
@@ -62,7 +67,7 @@ export default function Register() {
       <h2 className="mb-4 text-center text-2xl font-normal">Register an account</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <AccountTypeSelector selected={venueManager} setSelected={setVenueManager} />
-        {/* Dynamic Account Type Description */}
+
         <div className="mb-4 text-base">
           {venueManager ? (
             <p className="text-xs">
