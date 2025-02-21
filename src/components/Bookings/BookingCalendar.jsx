@@ -68,7 +68,7 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
       setDateRange([null, null]);
       setGuests(1);
       setError(null);
-    } catch (err) {
+    } catch {
       setError('Error creating booking. Please try again.');
     }
   }, [startDate, endDate, guests, venueId, token, navigate]);

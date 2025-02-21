@@ -12,7 +12,7 @@ export default function ProfileVenues({ venues }) {
   if (!Array.isArray(venues) || venues.length === 0)
     return (
       <div className="text-center">
-        <p className="mb-2 text-gray-500">You haven't listed any venues for booking yet.</p>
+        <p className="mb-2 text-gray-500">You haven&apos;t listed any venues for booking yet.</p>
         <LinkButton to="/venues/new" label="Add Venue" variant="accent" />
       </div>
     );

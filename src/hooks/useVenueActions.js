@@ -25,7 +25,7 @@ export default function useVenueActions(venueId) {
         autoClose: 1000,
         onClose: () => navigate('/profile'),
       });
-    } catch (error) {
+    } catch {
       toast.error('Failed to delete venue. Please try again.');
     } finally {
       setIsDeleting(false);
