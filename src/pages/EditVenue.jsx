@@ -5,6 +5,12 @@ import VenueForm from '../components/Venue/VenueForm';
 import { useTitle } from '../hooks/useTitle';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
+/**
+ * Page for editing an existing venue.
+ * Fetches venue data based on the venue ID from the URL params.
+ * 
+ * @returns {JSX.Element} - Rendered EditVenue page.
+ */
 export default function EditVenue() {
   const { id } = useParams();
   const [venue, setVenue] = useState(null);
