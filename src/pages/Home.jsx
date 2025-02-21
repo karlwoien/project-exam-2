@@ -17,7 +17,7 @@ export default function Home() {
       <section className="relative flex min-h-screen w-full justify-center bg-black bg-cover bg-center pt-32">
         <div
           className="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
-          style={{ backgroundImage: "url('/src/assets/hero-image.jpg')" }}
+          style={{ backgroundImage: "url('/hero-image.jpg')" }}
         >
           <div className="absolute inset-0 bg-black opacity-10"></div>
         </div>
