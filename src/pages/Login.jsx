@@ -11,8 +11,17 @@ import { useTitle } from '../hooks/useTitle';
 import { toast } from 'react-toastify';
 import NotificationMessage from '../components/Notification/NotificationsMessage';
 
+/**
+ * Login component that handles user authentication.
+ *
+ * @returns {JSX.Element} - Rendered Login component.
+ */
+/**
+   * Handles the form submission and user login process.
+   * @param {Object} data - User credentials.
+   */
 export default function Login() {
-  const [errorMessage, setErrorMessage] = useState(''); // Bruker kun denne for feil
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.login);
 
@@ -33,7 +42,7 @@ export default function Login() {
         autoClose: 1000,
         onClose: () => navigate('/profile'),
       });
-    } catch (error) {
+    } catch {
       setErrorMessage('Invalid email or password. Please try again.');
     }
   };
@@ -45,14 +54,13 @@ export default function Login() {
       <h2 className="mb-4 text-center text-2xl font-normal">Login to your account</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Email Input */}
         <InputField
           label="Email"
           placeholder="name@stud.noroff.no"
           register={{
             ...register('email'),
             onChange: (e) => {
-              if (errorMessage) setErrorMessage(''); // Nullstiller kun hvis det er feil
+              setErrorMessage('');
               register('email').onChange(e);
             },
           }}
@@ -62,7 +70,6 @@ export default function Login() {
           autoComplete="email"
         />
 
-        {/* Password Input */}
         <InputField
           label="Password"
           placeholder="Your password"
@@ -70,7 +77,7 @@ export default function Login() {
           register={{
             ...register('password'),
             onChange: (e) => {
-              if (errorMessage) setErrorMessage('');
+              setErrorMessage('');
               register('password').onChange(e);
             },
           }}
@@ -80,7 +87,6 @@ export default function Login() {
           autoComplete="current-password"
         />
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="mt-2 w-full rounded-full bg-bg-primary py-2 text-white hover:bg-bg-highlight"
@@ -88,7 +94,6 @@ export default function Login() {
           Login
         </button>
 
-        {/* Register Link */}
         <div className="mb-6 mt-3 flex justify-center space-x-2">
           <p className="text-sm">Don&apos;t have an account?</p>
           <Link to="/register" className="text-sm text-bg-primary hover:underline">
@@ -96,7 +101,6 @@ export default function Login() {
           </Link>
         </div>
 
-        {/* Error Message */}
         {errorMessage && <NotificationMessage type="error" message={errorMessage} />}
       </form>
     </div>
