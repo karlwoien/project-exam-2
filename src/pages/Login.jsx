@@ -55,7 +55,9 @@ export default function Login() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
+          id="email"
           label="Email"
+          htmlFor="email"
           placeholder="name@stud.noroff.no"
           register={{
             ...register('email'),
@@ -71,7 +73,9 @@ export default function Login() {
         />
 
         <InputField
+          id="password"
           label="Password"
+          htmlFor="password"
           placeholder="Your password"
           type="password"
           register={{

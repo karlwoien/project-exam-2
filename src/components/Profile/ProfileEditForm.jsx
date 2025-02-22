@@ -57,16 +57,16 @@ export default function ProfileEditForm({ profile, onClose }) {
     <div className="p-6">
       <h2 className="mb-4 text-lg">Edit Profile</h2>
       <form onSubmit={handleSubmit(handleProfileUpdate)}>
-        <label className="mb-2 block">Bio</label>
-        <textarea {...register('bio')} className="w-full rounded-md border p-2" />
+        <label htmlFor="profile-bio" className="mb-2 block">Bio</label>
+        <textarea {...register('bio')} id="profile-bio" className="w-full rounded-md border p-2" aria-label="Enter your bio"/>
         {errors.bio && <p className="text-red-500">{errors.bio.message}</p>}
 
-        <label className="mb-2 mt-4 block">Avatar URL</label>
-        <input type="text" {...register('avatarUrl')} className="w-full rounded-md border p-2" />
+        <label htmlFor="profile-avatar" className="mb-2 mt-4 block">Avatar URL</label>
+        <input type="text" {...register('avatarUrl')} id="profile-avatar" className="w-full rounded-md border p-2" aria-label="Enter your avatar URL"/>
         {errors.avatarUrl && <p className="text-red-500">{errors.avatarUrl.message}</p>}
 
-        <label className="mb-2 mt-4 block">Banner URL</label>
-        <input type="text" {...register('bannerUrl')} className="w-full rounded-md border p-2" />
+        <label htmlFor="profile-banner" className="mb-2 mt-4 block">Banner URL</label>
+        <input type="text" {...register('bannerUrl')} id="profile-banner" className="w-full rounded-md border p-2" aria-label="Enter your banner URL"/>
         {errors.bannerUrl && <p className="text-red-500">{errors.bannerUrl.message}</p>}
 
         <div className="mt-4 flex justify-between">

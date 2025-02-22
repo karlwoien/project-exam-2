@@ -1,6 +1,7 @@
 /**
  * Reusable input field component for forms.
  * @param {Object} props - Component props.
+ * @param {string} props.id - Unique ID for the input field.
  * @param {string} props.label - Label for the input field.
  * @param {string} [props.type='text'] - Type of input field (default: text).
  * @param {string} [props.placeholder] - Placeholder text for the input.
@@ -8,11 +9,14 @@
  * @param {Object} props.register - React Hook Form register function.
  * @returns {JSX.Element} - Rendered InputField component.
  */
-export default function InputField({ label, type = 'text', placeholder, error, register }) {
+export default function InputField({ id, label, type = 'text', placeholder, error, register }) {
   return (
     <div className="mb-4">
-      <label className="mb-1 block">{label}</label>
+      <label htmlFor={id} className="mb-1 block">
+        {label}
+      </label>
       <input
+        id={id} // Knytter input til label
         type={type}
         placeholder={placeholder}
         {...register}

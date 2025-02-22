@@ -121,12 +121,13 @@ export default function VenueForm({ venue }) {
           {errors.description?.message}
         </p>
       </div>
-      <div className="mb-2.5">
-        <label>Images</label>
+      <fieldset className="mb-2.5">
+        <legend className="block">Images</legend>
         {media.map((_, index) => (
           <div key={index} className="mb-2 flex items-center space-x-2">
             <input
               {...register(`media.${index}.url`)}
+              id={`media-${index}`}
               placeholder="Media URL"
               className={inputClass}
             />
@@ -150,7 +151,8 @@ export default function VenueForm({ venue }) {
           <CiCirclePlus className="h-10 w-10 text-bg-highlight" />
           <span className="text-sm text-gray-500">Add more</span>
         </button>
-      </div>
+      </fieldset>
+
       <div className="mb-2.5 flex space-x-2">
         <div>
           <label htmlFor="venue-price">Price/night</label>
@@ -181,11 +183,11 @@ export default function VenueForm({ venue }) {
       <p id="maxGuests-error" className="text-red-500">
         {errors.maxGuests?.message}
       </p>
-      <div className="mb-2.5">
-        <label>Amenities</label>
+      <fieldset className="mb-2.5">
+        <legend className="block">Amenities</legend>
         <div className="flex flex-wrap space-x-2.5">
           {['breakfast', 'parking', 'wifi', 'pets'].map((amenity) => (
-            <label key={amenity} className="flex items-center space-x-1">
+            <label key={amenity} htmlFor={`amenity-${amenity}`} className="flex items-center space-x-1">
               <Controller
                 control={control}
                 name={`meta.${amenity}`}
@@ -193,8 +195,8 @@ export default function VenueForm({ venue }) {
                   <input
                     type="checkbox"
                     {...field}
+                    id={`amenity-${amenity}`}
                     checked={field.value}
-                    aria-label={`Include ${amenity}`}
                   />
                 )}
               />
@@ -202,23 +204,32 @@ export default function VenueForm({ venue }) {
             </label>
           ))}
         </div>
-      </div>
-      <div className="mb-2.5">
-        <label className="block">Rating</label>
+      </fieldset>
+      <fieldset className="mb-2.5">
+        <legend className="block">Rating</legend>
         <div className="flex items-center space-x-1">
           {Array.from({ length: 5 }, (_, index) => (
-            <MdStar
-              key={index}
-              className={
-                index < rating ? 'cursor-pointer text-bg-highlight' : 'cursor-pointer text-gray-300'
-              }
-              onClick={() => handleRatingClick(index)}
-              size={24}
-              aria-label={`Rate venue ${index + 1} out of 5`}
-            />
+            <label key={index} htmlFor={`rating-${index + 1}`} className="cursor-pointer">
+              <input
+                type="radio"
+                id={`rating-${index + 1}`}
+                name="rating"
+                value={index + 1}
+                className="sr-only"
+                checked={rating === index + 1}
+                onChange={() => handleRatingClick(index)}
+              />
+              <MdStar
+                className={
+                  index < rating ? 'text-bg-highlight' : 'text-gray-300'
+                }
+                size={24}
+                aria-hidden="true"
+              />
+            </label>
           ))}
         </div>
-      </div>
+      </fieldset>
       <div className="mb-2.5">
         <label htmlFor="venue-address">Address</label>
         <input

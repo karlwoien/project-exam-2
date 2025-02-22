@@ -105,6 +105,7 @@ export default function Register() {
           register={register('password')}
           error={errors.password?.message}
           aria-label="Password"
+          autoComplete="new-password"
         />
         <InputField
           id="confirmPassword"
@@ -114,6 +115,7 @@ export default function Register() {
           register={register('confirmPassword')}
           error={errors.confirmPassword?.message}
           aria-label="Confirm password"
+          autoComplete="new-password"
         />
 
         <button
