@@ -2,7 +2,7 @@ import VenueForm from '../components/Venue/VenueForm';
 import useAuthStore from '../store/authStore';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 
 /**
  * Page for adding a new venue.
@@ -21,7 +21,7 @@ export default function AddVenue() {
     }
   }, [user, navigate]);
 
-  useTitle('Add venue');
+  useSEO('Add new venue', 'List your venue on Holidaze and start accepting bookings today. Create a unique listing with photos, amenities, and pricing.');
 
   return (
     <div className="mx-auto max-w-5xl">

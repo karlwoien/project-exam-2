@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../forms/InputField';
 import AccountTypeSelector from '../forms/AccountTypeSelector';
 import { Link } from 'react-router-dom';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import { toast } from 'react-toastify';
 
 /**
@@ -60,7 +60,7 @@ export default function Register() {
     }
   };
 
-  useTitle('Register');
+  useSEO('Register', 'Join Holidaze today! Sign up as a traveler to book unique stays or as a venue manager to list and manage venues.');
 
   return (
     <div className="mx-auto max-w-md rounded-lg border border-bg-primary p-6">

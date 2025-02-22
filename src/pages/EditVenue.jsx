@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchVenue } from '../api';
 import VenueForm from '../components/Venue/VenueForm';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
 /**
@@ -19,7 +19,7 @@ export default function EditVenue() {
     fetchVenue(id).then((response) => setVenue(response.data));
   }, [id]);
 
-  useTitle('Edit venue');
+  useSEO('Edit venue', 'Update your venue details, photos, and availability on Holidaze. Keep your listing fresh and attract more bookings.');
 
   return (
     <div className="mx-auto max-w-5xl">

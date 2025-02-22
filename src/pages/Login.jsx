@@ -7,7 +7,7 @@ import useAuthStore from '../store/authStore';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../forms/InputField';
 import { Link } from 'react-router-dom';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import { toast } from 'react-toastify';
 import NotificationMessage from '../components/Notification/NotificationsMessage';
 
@@ -47,7 +47,7 @@ export default function Login() {
     }
   };
 
-  useTitle('Login');
+  useSEO('Login', 'Access your Holidaze account to manage bookings, update your profile, or list a new venue. Secure and easy login.');
 
   return (
     <div className="mx-auto max-w-md rounded-lg border border-bg-primary p-6">

@@ -1,7 +1,7 @@
 import VenueCard from '../components/VenueCard';
 import VenueSearch from '../components/SearchVenues/VenueSearch';
 import useVenues from '../hooks/useVenues';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
 /**
@@ -9,7 +9,7 @@ import LoadingSpinner from '../components/Loading/LoadingSpinner';
  * @returns {JSX.Element} - Rendered Venues page.
  */
 export default function Venues() {
-  useTitle('Venues');
+  useSEO('Explore Amazing Venues', 'Browse a curated selection of unique and verified venues. Find the perfect stay for your next adventure with Holidaze.');
   const { venues, isLoading, error, fetchVenues } = useVenues();
 
   const handleSearch = (query) => {

@@ -1,7 +1,7 @@
 import LinkButton from '../components/Button/LinkButton';
 import { CiGlobe, CiCalendar, CiAirportSign1 } from 'react-icons/ci';
 import LookaheadSearch from '../components/SearchVenues/LookaheadSearch';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 
 /**
  * Home page component for Holidaze.
@@ -11,7 +11,8 @@ import { useTitle } from '../hooks/useTitle';
  * @returns {JSX.Element} - Rendered Home page.
  */
 export default function Home() {
-  useTitle('Home');
+  useSEO('Home', 'Find and book unique venues for your next holiday.');
+
   return (
     <>
       <section className="relative flex min-h-screen w-full justify-center bg-black bg-cover bg-center pt-32">

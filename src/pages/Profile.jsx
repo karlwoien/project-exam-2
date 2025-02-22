@@ -3,7 +3,7 @@ import useAuthStore from '../store/authStore';
 import ProfileBookings from '../components/Profile/ProfileBookings';
 import ProfileVenues from '../components/Profile/ProfileVenues';
 import ProfileCard from '../components/Profile/ProfileCard';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ export default function Profile() {
     }
   }, [user, navigate]);
 
-  useTitle(user ? user.name : 'Loading...');
+  useSEO('Your Profile', 'Manage bookings, venues or update your profile.');
 
   if (isLoading || !profile) {
     return <LoadingSpinner />;

@@ -6,7 +6,7 @@ import BookingCalendar from '../components/Bookings/BookingCalendar';
 import UpcomingBookings from '../components/VenueInfo/UpcomingBookings';
 import VenueContent from '../components/VenueInfo/VenueContent';
 import useVenueActions from '../hooks/useVenueActions';
-import { useTitle } from '../hooks/useTitle';
+import { useSEO } from '../hooks/useSEO';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
 
 /**
@@ -20,7 +20,7 @@ export default function VenueDetails() {
   const { user } = useAuthStore();
   const { handleDelete, isDeleting } = useVenueActions(id);
 
-  useTitle(venue?.name || 'Venue Details');
+  useSEO( venue?.name || 'Venue Details', 'View photos, check amenities, available dates for this unique destination.');
 
   if (isLoading) return <LoadingSpinner />;
   if (error) return <p className="text-red-500">Error: {error}</p>;
