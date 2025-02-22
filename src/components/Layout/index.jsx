@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import ScrollToTop from '../Scroll/ScrollToTop';
 
 /**
  * Layout component that wraps the application with a header, footer, and dynamic content.
@@ -12,6 +13,7 @@ export default function Layout() {
 
   return (
     <>
+      <ScrollToTop />
       <Header />
       <main className={`vh-100 flex-grow ${isHome ? 'pt-0' : 'px-2.5 py-5 md:py-10'}`}>
         <Outlet />
