@@ -15,7 +15,7 @@ export function getUser() {
 
 /**
  * Logs out the current user by clearing Zustand state and Local Storage.
- * Redirects to the login page without a full page refresh.
+ * Redirects to the home page if navigate.
  *
  * @param {Function} navigate - React Router navigate function.
  */
@@ -24,6 +24,6 @@ export function logoutUser(navigate) {
   localStorage.removeItem(USER_KEY);
 
   if (navigate) {
-    navigate('/login');
+    navigate('/');
   }
 }
