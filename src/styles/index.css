@@ -37,22 +37,22 @@ p {
 /*React-datepicker custom styling*/
 .react-datepicker {
   border: none !important;
-  border-radius: 12px !important; /* Runde kanter */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important; /* Myk skygge */
+  border-radius: 12px !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
   padding: 8px;
-  width: 350px !important; /* Øker bredden */
+  width: 350px !important;
   font-size: 16px !important;
 }
 
 .react-datepicker__header {
-  background-color: white !important; /* Hvit bakgrunn på toppen (måned/år) */
+  background-color: white !important;
   border-bottom: none !important;
   width: 100% !important;
 }
 
 .react-datepicker__navigation {
-  top: 12px !important; /* Plasser pilene riktig */
-  width: 40px !important; /* Gjør pilene større for bedre UX */
+  top: 12px !important;
+  width: 40px !important;
   height: 40px !important;
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@ p {
 
 .react-datepicker__day,
 .react-datepicker__day-name {
-  width: 40px !important; /* Gjør dagene større */
+  width: 40px !important;
   height: 40px !important;
   display: flex;
   align-items: center;
