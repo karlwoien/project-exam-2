@@ -1,6 +1,6 @@
 # Project Exam 2 - Holidaze
 
-![Image]![Holidaze](https://github.com/user-attachments/assets/024d297d-6fee-443a-8fd8-9b14e8b726c6)
+![Holidaze](https://github.com/user-attachments/assets/024d297d-6fee-443a-8fd8-9b14e8b726c6)
 
 
 This project was built as part of the Noroff Frontend Development - Project Exam 2.
