@@ -93,9 +93,10 @@ export default function BookingCalendar({ bookings, maxGuests, venueId }) {
 
       <div className="mt-3">
         <div className="flex items-center justify-between">
-          <label className="text-lg font-normal">How many guests?</label>
+          <label htmlFor="guest-count" className="text-lg font-normal">How many guests?</label>
           <input
             type="number"
+            id="guest-count"
             value={guests}
             onChange={(e) => setGuests(Number(e.target.value))}
             min="1"
