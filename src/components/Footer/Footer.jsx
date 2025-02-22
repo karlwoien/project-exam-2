@@ -50,6 +50,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-bg-highlight"
+              aria-label="Visit our Instagram profile"
             >
               <CiInstagram />
             </a>
@@ -58,6 +59,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-bg-highlight"
+              aria-label="Visit our Facebook profile"
             >
               <CiFacebook />
             </a>
@@ -66,6 +68,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-bg-highlight"
+              aria-label="Visit our LinkedIn profile"
             >
               <CiLinkedin />
             </a>
