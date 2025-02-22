@@ -19,7 +19,7 @@ export default function Home() {
           className="absolute inset-0 z-0 h-full w-full bg-cover bg-center"
           style={{ backgroundImage: "url('/hero-image.jpg')" }}
         >
-          <div className="absolute inset-0 bg-black opacity-10"></div>
+          <div className="absolute inset-0 bg-bg-primary opacity-10"></div>
         </div>
 
         <div className="z-10 mx-auto max-w-4xl px-3 text-center text-white">
