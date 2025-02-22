@@ -5,14 +5,25 @@ import ProfileVenues from '../components/Profile/ProfileVenues';
 import ProfileCard from '../components/Profile/ProfileCard';
 import { useTitle } from '../hooks/useTitle';
 import LoadingSpinner from '../components/Loading/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 /**
  * Profile page where users can view their profile details, bookings, or managed venues.
+ * Redirects to the home page if the user is not logged in.
+ *
  * @returns {JSX.Element} - Rendered Profile component.
  */
 export default function Profile() {
   const { user } = useAuthStore();
   const { profile, venues, bookings, isLoading } = useProfile();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
 
   useTitle(user ? user.name : 'Loading...');
 
@@ -24,9 +35,9 @@ export default function Profile() {
     <div className="mx-auto max-w-5xl">
       <ProfileCard profile={profile} />
 
-      {user.venueManager && venues ? (
+      {user && user.venueManager && venues ? (
         <ProfileVenues venues={venues} />
-      ) : bookings ? (
+      ) : user && bookings ? (
         <ProfileBookings bookings={bookings} />
       ) : null}
     </div>
