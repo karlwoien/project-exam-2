@@ -24,8 +24,8 @@ export default function Home() {
         </div>
 
         <div className="z-10 mx-auto max-w-4xl px-3 text-center text-white">
-          <h1 className="mb-5 font-hero text-6xl">YOUR NEXT HOLIDAY AWAITS</h1>
-          <p className="mb-5">
+          <h1 className="mb-5 font-hero text-4xl sm:text-5xl md:text-6xl">YOUR NEXT HOLIDAY AWAITS</h1>
+          <p className="mb-5 text-base sm:text-lg">
             Choose from a wide selection of verified venues, plan your stay with confidence, and
             enjoy a seamless booking experience - only with Holidaze.
           </p>
