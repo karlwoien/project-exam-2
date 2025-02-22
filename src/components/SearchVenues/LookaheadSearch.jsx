@@ -37,21 +37,30 @@ export default function LookaheadSearch() {
       />
       {query.length > 1 && Array.isArray(searchResults) && searchResults.length > 0 && (
         <ul className="absolute mt-1 w-full rounded-lg border border-gray-300 bg-white text-left text-black shadow-md">
-          {searchResults.map(({ id, media, name, price }) => (
-            <li
-              key={id}
-              onClick={() => navigateToVenue(id)}
-              className="flex cursor-pointer items-center p-2 hover:bg-gray-100"
-            >
-              <img
-                src={media?.[0]?.url || 'https://via.placeholder.com/40'}
-                alt={media?.[0]?.alt || 'Venue image'}
-                className="mr-3 h-10 w-10 rounded-md object-cover"
-              />
-              <span className="font-medium">{name}</span>
-              <span className="ml-auto font-medium">{price} NOK/Night</span>
-            </li>
-          ))}
+          {searchResults.map(({ id, media, name, price }) => {
+            const imageUrl = media?.[0]?.url && media[0].url.startsWith('http') 
+              ? media[0].url 
+              : '/default-placeholder.jpg';
+
+            const truncatedName = name.length > 20 ? `${name.slice(0, 30)}` : name;
+
+            return (
+              <li
+                key={id}
+                onClick={() => navigateToVenue(id)}
+                className="flex cursor-pointer items-center p-2 hover:bg-gray-100"
+              >
+                <img
+                  src={imageUrl}
+                  alt={media?.[0]?.alt || 'Venue image'}
+                  className="mr-3 h-10 w-10 rounded-md object-cover"
+                  loading="lazy"
+                />
+                <span className="font-medium">{truncatedName}</span>
+                <span className="ml-auto font-medium hidden sm:block">{price} NOK/Night</span>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
