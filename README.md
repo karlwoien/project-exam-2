@@ -1,7 +1,6 @@
 # Project Exam 2 - Holidaze
 
-![Holidaze](https://github.com/user-attachments/assets/024d297d-6fee-443a-8fd8-9b14e8b726c6)
-
+![Holidaze](https://github.com/user-attachments/assets/ab89225b-b0cd-4271-9f88-fbff16f7f2f4)
 
 This project was built as part of the Noroff Frontend Development - Project Exam 2.
 The goal was to build an accommodation booking site where users can browse, book, list, and manage venues.
