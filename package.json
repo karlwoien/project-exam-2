@@ -1,8 +1,19 @@
 {
   "name": "project-exam-2",
+  "description": "Front-end for Holidaze. Project Exam 2 at Noroff.",
+  "author": "Karl Erik Wøien <karwoi53055@stud.noroff.no>",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "keywords": [
+    "noroff",
+    "fed",
+    "pe2",
+    "js",
+    "tailwind",
+    "react",
+    "vite"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
